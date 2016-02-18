@@ -6,7 +6,9 @@ var EventSchema = new Schema({
   event_name: String,
   location: String,
   radius_filter: Number,
-  yelp_info: Object
+  choices: {
+    business_id: Array
+  }
   
 });
 
