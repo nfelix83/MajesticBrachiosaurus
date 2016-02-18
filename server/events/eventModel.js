@@ -2,10 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var EventSchema = new Schema({
-  term: String,
-  location: String
+  event_id: String,
+  event_name: String,
+  location: String,
+  radius_filter: Number,
+  yelp_info: Object
+  
 });
 
-var Event = mongoose.model('Event', EventSchema);
-
-module.exports = Event;
+module.exports = mongoose.model('Event', EventSchema);
