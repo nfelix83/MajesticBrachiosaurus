@@ -1,4 +1,4 @@
-<div class="card small pink accent-3 z-depth-2">
+<!-- <div class="card small pink accent-3 z-depth-2">
   <div class="card-image">
     <img class="activator" src="https://s3-media3.fl.yelpcdn.com/bphoto/WOI05fH59CLZi-rhxQppjw/ls.jpg">
   </div>
@@ -8,12 +8,35 @@
   </div>
   <div class="card-reveal">
     <span class="card-title">Venue Name<i class="material-icons right">close</i></span>
-    <p>I am a very simple card. I am good at containing small bits of information.
-      I am convenient because I require little markup to use effectively.</p>
+
     <div class="card-action">
       <a href="#">This is a link</a>
       <a href="#">This is a link</a>
     </div>
   </div>
+</div> -->
+<h1>Your Preferences</h1>
+
+<form ng-submit="sendPreference()">
+  <div class="container">
+    Search: <input type="text" ng-model="preference.term" name="term"/>
+    <input type="submit" id="submit" value="Submit"/>
+  </div>
+  </form>
+<div class="choices">
+  <h2>Choices</h2>
+  <md-card>
+   <img src="https://s3-media3.fl.yelpcdn.com/bphoto/WOI05fH59CLZi-rhxQppjw/ls.jpg" class="md-card-image" alt="image caption">
+   <md-card-content>
+    <h2>Card headline</h2>
+      <p>I am a very simple card. I am good at containing small bits of information.
+    I am convenient because I require little markup to use effectively.</p>
+   </md-card-content>
+    <md-card-actions layout="row" layout-align="end center">
+      <md-button>Action 1</md-button>
+      <md-button>Action 2</md-button>
+    </md-card-actions>
+  </md-card>
 </div>
+
 
