@@ -108,6 +108,7 @@ module.exports = {
         res.status(500).send(err);
       }
       event.businesses.push({business_id: req.body.id, votes: 0});
+      res.status(201).send();
     });
   },
 
