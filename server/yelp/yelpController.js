@@ -25,25 +25,40 @@ module.exports = {
         if(err){
           res.send(500, err);
         }
-        req.query.location = event.location;
+        if(event !== undefined){
+          req.query.location = event.location
+          } else{
+          req.query.location = '90210'
+        }
+
+        req.query.limit = req.query.limit || 5;
+
+        yelp.search(req.query)
+        .then(function(data){
+          var businesses = [];
+          Promise.each(data.businesses, function(business){
+            yelp.business(business.id)
+            .then(function(result){
+              businesses.push(result);
+              if(businesses.length === parseInt(req.query.limit)){
+                res.json(businesses);
+                console.log("BOOM")
+              }
+            })
+            .catch(function(err){
+              console.error(err);
+              res.send(500, err);
+            });
+          })
+          .catch(function(err){
+            console.error(err);
+            res.send(500, err);
+          });
+        });
       });
     }
 
-    //If location radius becomes a required event input
 
-    /*if(req.query.radius_filter === undefined){
-        Event.findOne({event_id: req.params.event_id})
-        .then(function(err, event){
-          if(err){
-            res.send(500, err);
-          }
-          if(event.radius_filter){
-            req.query.radius_filter = event.radius_filter;
-          } else {
-            req.query.radius_filter = 5000;
-          }
-        });
-      }*/
 
     req.query.limit = req.query.limit || 5;
 
@@ -69,6 +84,22 @@ module.exports = {
         res.send(500, err);
       });
     });
+
+    //If location radius becomes a required event input
+
+    /*if(req.query.radius_filter === undefined){
+        Event.findOne({event_id: req.params.event_id})
+        .then(function(err, event){
+          if(err){
+            res.send(500, err);
+          }
+          if(event.radius_filter){
+            req.query.radius_filter = event.radius_filter;
+          } else {
+            req.query.radius_filter = 5000;
+          }
+        });
+      }*/
   },
 
   storeBusiness: function(req, res){
