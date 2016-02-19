@@ -38,8 +38,14 @@ module.exports = {
       if(err) {
         return console.error(err);
       }
-      console.log('event', event);
-      res.json(event);
+      if(event) {
+        console.log('event', event.event_id);
+        res.redirect('/#/' + event.event_id);
+      }
+      else {
+        res.redirect('/');
+      }
+      
     });
   }
 };
