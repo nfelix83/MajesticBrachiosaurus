@@ -25,7 +25,7 @@ module.exports = {
         if(err){
           res.send(500, err);
         }
-        req.query.location = event.location;
+        req.query.location = event.location || '90210';
       });
     }
 
