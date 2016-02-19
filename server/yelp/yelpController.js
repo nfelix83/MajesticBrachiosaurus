@@ -9,7 +9,7 @@ var yelp = new Yelp({
 });
 
 module.exports = {
-  var search = function(req, res){
+  search: function(req, res){
     req.query.sort = '0';
     /*
     0 - Default , weight given to matching search terms
@@ -64,9 +64,9 @@ module.exports = {
         res.send(500, err);
       });
     });
-  };
+  },
 
-  var storeBusiness = function(req, res){
+  storeBusiness: function(req, res){
     Event.findOne({event_id: req.params.event_id})
     .then(function(err, event){
       if(err){
@@ -74,9 +74,9 @@ module.exports = {
       }
       event.businesses.push({business_id: req.body.id, votes: 0});
     });
-  };
+  },
 
-  var getBusinesses = function(req, res){
+  getBusinesses: function(req, res){
     Event.findOne({event_id: req.params.event_id})
     .then(function(err, event){
       if(err){
@@ -84,5 +84,5 @@ module.exports = {
       }
       res.json(event.businesses);
     });
-  };
+  }
 }
