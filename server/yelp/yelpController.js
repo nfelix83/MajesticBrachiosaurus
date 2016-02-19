@@ -63,6 +63,26 @@ var search = function(req, res){
       res.send(500, err);
     });
   });
-}
+};
+
+var storeBusiness = function(req, res){
+  Event.findOne({event_id: req.params.event_id})
+  .then(function(err, event){
+    if(err){
+      res.send(500, err);
+    }
+    event.businesses.push({business_id: req.body.id, votes: 0});
+  });
+};
+
+var getBusinesses = function(req, res){
+  Event.findOne({event_id: req.params.event_id})
+  .then(function(err, event){
+    if(err){
+      res.send(500, err);
+    }
+    res.json(event.businesses);
+  });
+};
 
 module.exports = search;
