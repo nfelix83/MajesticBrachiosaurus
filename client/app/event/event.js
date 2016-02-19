@@ -1,6 +1,4 @@
 angular.module('clever.event', [])
-  .controller('EventController', function($scope){
-})
 
 .controller('EventController',['$scope','Events','$location', function($scope,Events,$location){
   $scope.event = {};

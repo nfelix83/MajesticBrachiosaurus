@@ -1,15 +1,17 @@
 angular.module('clever.choices', [])
-  .controller('ChoicesController', function($scope){
-})
+
 
 .controller('PreferenceController', function($scope,Preference,$routeParams){
   //TODO send and receive preferences on same page how to receive and send/receive
   $scope.preference={
-    'term': ''
+    'term': '',
+    'location': '97017'
   };
 
   $scope.searchresults = [];
   $scope.choices = [];
+
+  $scope.getEventDetails
 
   $scope.getChoices=function(){
     Preference.getChoices($scope.choices);
@@ -33,7 +35,7 @@ angular.module('clever.choices', [])
     }).then(function(data,err){
       for(var i = 0; i < data.data.length; i++){
         resultsArray.push(data.data[i]);
-      };
+      }
     });
   };
 
@@ -45,7 +47,7 @@ angular.module('clever.choices', [])
       choicesArray = [];
       for(var i = 0; i < data.data.length; i++){
         choicesArray.push(data.data[i]);
-      };
+      }
     });
   };
 
@@ -61,7 +63,7 @@ angular.module('clever.choices', [])
         console.error(err);
       }
     });
-  }
+  };
 
   return {
     sendPreference:sendPreference,
