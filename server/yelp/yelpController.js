@@ -20,10 +20,12 @@ module.exports = {
     */
 
     if(req.query.location === undefined){
-      Event.findOne({event_id: req.params.event_id})
-      .then(function(err, event){
+      var event_id = req.params.event_id;
+      Event.findOne({event_id: event_id})
+      .then(function (event, err){
         if(err){
-          res.send(500, err);
+          console.log('DB : ' + err)
+          res.status(500).send(err);
         }
         if(event !== undefined){
           req.query.location = event.location
@@ -42,48 +44,45 @@ module.exports = {
               businesses.push(result);
               if(businesses.length === parseInt(req.query.limit)){
                 res.json(businesses);
-                console.log("BOOM")
               }
             })
             .catch(function(err){
-              console.error(err);
-              res.send(500, err);
+              console.error('inEach: ' + err);
+              res.status(500).send(err);
             });
           })
           .catch(function(err){
-            console.error(err);
-            res.send(500, err);
+            console.error('inSearchThen: ' + err);
+            res.status(500).send(err);
           });
         });
       });
-    }
+    } else {
 
+      req.query.limit = req.query.limit || 5;
 
-
-    req.query.limit = req.query.limit || 5;
-
-    yelp.search(req.query)
-    .then(function(data){
-      var businesses = [];
-      Promise.each(data.businesses, function(business){
-        yelp.business(business.id)
-        .then(function(result){
-          businesses.push(result);
-          if(businesses.length === parseInt(req.query.limit)){
-            res.json(businesses);
-            console.log("BOOM")
-          }
+      yelp.search(req.query)
+      .then(function(data){
+        var businesses = [];
+        Promise.each(data.businesses, function(business){
+          yelp.business(business.id)
+          .then(function(result){
+            businesses.push(result);
+            if(businesses.length === parseInt(req.query.limit)){
+              res.json(businesses);
+            }
+          })
+          .catch(function(err){
+            console.error(err);
+            res.status(500).send(err);
+          });
         })
         .catch(function(err){
           console.error(err);
-          res.send(500, err);
+          res.status(500).send(err);
         });
-      })
-      .catch(function(err){
-        console.error(err);
-        res.send(500, err);
       });
-    });
+    }
 
     //If location radius becomes a required event input
 
@@ -104,9 +103,9 @@ module.exports = {
 
   storeBusiness: function(req, res){
     Event.findOne({event_id: req.params.event_id})
-    .then(function(err, event){
+    .then(function(event, err){
       if(err){
-        res.send(500, err);
+        res.status(500).send(err);
       }
       event.businesses.push({business_id: req.body.id, votes: 0});
     });
@@ -114,9 +113,9 @@ module.exports = {
 
   getBusinesses: function(req, res){
     Event.findOne({event_id: req.params.event_id})
-    .then(function(err, event){
+    .then(function(event, err){
       if(err){
-        res.send(500, err);
+        res.status(500).send(err);
       }
       res.json(event.businesses);
     });
