@@ -32,7 +32,7 @@ angular.module('clever.choices', [])
     }).then(function(data,err){
       for(var i = 0; i < data.data.length; i++){
         resultsArray.push(data.data[i]);
-      };
+      }
     });
   };
 
@@ -44,7 +44,7 @@ angular.module('clever.choices', [])
       choicesArray = [];
       for(var i = 0; i < data.data.length; i++){
         choicesArray.push(data.data[i]);
-      };
+      }
     });
   };
 
@@ -60,7 +60,7 @@ angular.module('clever.choices', [])
         console.error(err);
       }
     });
-  }
+  };
 
   return {
     sendPreference:sendPreference,
