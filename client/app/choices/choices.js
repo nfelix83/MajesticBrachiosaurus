@@ -27,6 +27,9 @@ angular.module('clever.choices', [])
 
 .factory('Preference', function($http, $routeParams){
   //send request to yelp api
+
+  var defaultImagePath = 'http://www.acclaimclipart.com/free_clipart_images/generic_sign_for_a_restaurant_with_a_spoon_and_fork_crossed_to_suggest_a_dining_establishment_0515-1011-1202-2158_SMU.jpg';
+
   var sendPreference=function(term, resultsArray){
     return $http({
       method: 'Get',
@@ -34,6 +37,10 @@ angular.module('clever.choices', [])
       params: term
     }).then(function(data,err){
       for(var i = 0; i < data.data.length; i++){
+        console.log(data.data[i].image_url)
+        if(data.data[i].image_url === undefined){
+          data.data[i].image_url = defaultImagePath;
+        }
         resultsArray.push(data.data[i]);
       }
     });
