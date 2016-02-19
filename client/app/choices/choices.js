@@ -20,6 +20,7 @@ angular.module('clever.choices', [])
   $scope.getChoices();
 
   $scope.sendPreference= function(){
+    $scope.searchresults = [];
     Preference.sendPreference($scope.preference, $scope.searchresults);
   };
 })
