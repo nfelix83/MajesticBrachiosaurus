@@ -1,3 +1,15 @@
-<div>
-  <p>This is the event view template.</p>
-</div>
+
+  <h1>Add Event Name and Location</h1>
+
+  <form ng-submit="sendNewEvent()">
+
+    <div class="newEvent">
+
+      Event Name:
+      <input type="text" ng-model="event.name" name="text" />
+      Enter Location:
+      <input type="text" ng-model="event.location" name="location" />
+      <input type="submit" id="submit" value="Submit" />
+    </div>
+
+  </form>
