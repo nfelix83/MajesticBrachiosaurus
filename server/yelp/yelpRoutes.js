@@ -1,6 +1,6 @@
 var app = require('../server.js');
-var yelpSearch = require('./yelpController.js');
+var yelp = require('./yelpController.js');
 
-app.get('/:event_id/search', yelpSearch);
-app.post('/:event_id/store', storeBusiness);
-app.get('/:event_id/saved', getBusinesses);
+app.get('/:event_id/search', yelp.Search);
+app.post('/:event_id/store', yelp.storeBusiness);
+app.get('/:event_id/saved', yelp.getBusinesses);
