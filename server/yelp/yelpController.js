@@ -28,7 +28,7 @@ module.exports = {
           res.status(500).send(err);
         }
         if(event !== undefined){
-          req.query.location = event.location
+          req.query.location = event.location || 'The North Pole'
           } else{
           req.query.location = '90210'
         }
@@ -107,7 +107,8 @@ module.exports = {
       if(err){
         res.status(500).send(err);
       }
-      event.businesses.push({business_id: req.body.id, votes: 0});
+      event.choices.businesses.push({business_id: req.body.id, votes: 0});
+      event.save();
       res.status(201).send();
     });
   },
