@@ -18,11 +18,13 @@ module.exports = {
     1 - Weight added to location
     2 - Weight added to rating/# of ratings
     */
-    console.log(req.params)
+
     if(req.query.location === undefined){
-      Event.findOne({event_id: req.params.event_id})
-      .then(function(err, event){
+      var event_id = req.params.event_id;
+      Event.findOne({event_id: event_id})
+      .then(function (event, err){
         if(err){
+          console.log('DB : ' + err)
           res.status(500).send(err);
         }
         if(event !== undefined){
@@ -45,43 +47,42 @@ module.exports = {
               }
             })
             .catch(function(err){
-              console.error(err);
+              console.error('inEach: ' + err);
               res.status(500).send(err);
             });
+          })
+          .catch(function(err){
+            console.error('inSearchThen: ' + err);
+            res.status(500).send(err);
+          });
+        });
+      });
+    } else {
+
+      req.query.limit = req.query.limit || 5;
+
+      yelp.search(req.query)
+      .then(function(data){
+        var businesses = [];
+        Promise.each(data.businesses, function(business){
+          yelp.business(business.id)
+          .then(function(result){
+            businesses.push(result);
+            if(businesses.length === parseInt(req.query.limit)){
+              res.json(businesses);
+            }
           })
           .catch(function(err){
             console.error(err);
             res.status(500).send(err);
           });
-        });
-      });
-    }
-
-
-
-    req.query.limit = req.query.limit || 5;
-
-    yelp.search(req.query)
-    .then(function(data){
-      var businesses = [];
-      Promise.each(data.businesses, function(business){
-        yelp.business(business.id)
-        .then(function(result){
-          businesses.push(result);
-          if(businesses.length === parseInt(req.query.limit)){
-            res.json(businesses);
-          }
         })
         .catch(function(err){
           console.error(err);
           res.status(500).send(err);
         });
-      })
-      .catch(function(err){
-        console.error(err);
-        res.status(500).send(err);
       });
-    });
+    }
 
     //If location radius becomes a required event input
 
@@ -102,7 +103,7 @@ module.exports = {
 
   storeBusiness: function(req, res){
     Event.findOne({event_id: req.params.event_id})
-    .then(function(err, event){
+    .then(function(event, err){
       if(err){
         res.status(500).send(err);
       }
@@ -112,7 +113,7 @@ module.exports = {
 
   getBusinesses: function(req, res){
     Event.findOne({event_id: req.params.event_id})
-    .then(function(err, event){
+    .then(function(event, err){
       if(err){
         res.status(500).send(err);
       }
