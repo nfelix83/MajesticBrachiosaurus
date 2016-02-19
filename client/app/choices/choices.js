@@ -78,6 +78,8 @@ angular.module('clever.choices', [])
     }).then(function(data,err){
       if(err){
         console.error(err);
+      } else {
+        getChoices();
       }
     });
   };
