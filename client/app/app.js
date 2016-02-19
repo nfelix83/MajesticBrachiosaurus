@@ -13,7 +13,7 @@ angular.module('clever', [
     })
     .when('/:event_id', {
       templateUrl : 'app/choices/choices.html',
-      controller: 'PreferencesController'
+      controller: 'PreferenceController'
     })
     .otherwise('/', {
         templateUrl:'home.html'
