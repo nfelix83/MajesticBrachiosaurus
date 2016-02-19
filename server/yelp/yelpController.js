@@ -15,6 +15,33 @@ var search = function(req, res){
   1 - Weight added to location
   2 - Weight added to rating/# of ratings
   */
+
+  if(req.query.location === undefined){
+    Event.findOne({event_id: req.params.event_id})
+    .then(function(err, event){
+      if(err){
+        res.send(500, err);
+      }
+      req.query.location = event.location;
+    });
+  }
+
+  //If location radius becomes a required event input
+
+  /*if(req.query.radius_filter === undefined){
+      Event.findOne({event_id: req.params.event_id})
+      .then(function(err, event){
+        if(err){
+          res.send(500, err);
+        }
+        if(event.radius_filter){
+          req.query.radius_filter = event.radius_filter;
+        } else {
+          req.query.radius_filter = 5000;
+        }
+      });
+    }*/
+
   yelp.search(req.query)
   .then(function(data){
     var businesses = [];
