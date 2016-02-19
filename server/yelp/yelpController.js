@@ -18,12 +18,12 @@ module.exports = {
     1 - Weight added to location
     2 - Weight added to rating/# of ratings
     */
-
+    console.log(req.params)
     if(req.query.location === undefined){
       Event.findOne({event_id: req.params.event_id})
       .then(function(err, event){
         if(err){
-          res.send(500, err);
+          res.status(500).send(err);
         }
         if(event !== undefined){
           req.query.location = event.location
@@ -42,17 +42,16 @@ module.exports = {
               businesses.push(result);
               if(businesses.length === parseInt(req.query.limit)){
                 res.json(businesses);
-                console.log("BOOM")
               }
             })
             .catch(function(err){
               console.error(err);
-              res.send(500, err);
+              res.status(500).send(err);
             });
           })
           .catch(function(err){
             console.error(err);
-            res.send(500, err);
+            res.status(500).send(err);
           });
         });
       });
@@ -71,17 +70,16 @@ module.exports = {
           businesses.push(result);
           if(businesses.length === parseInt(req.query.limit)){
             res.json(businesses);
-            console.log("BOOM")
           }
         })
         .catch(function(err){
           console.error(err);
-          res.send(500, err);
+          res.status(500).send(err);
         });
       })
       .catch(function(err){
         console.error(err);
-        res.send(500, err);
+        res.status(500).send(err);
       });
     });
 
@@ -106,7 +104,7 @@ module.exports = {
     Event.findOne({event_id: req.params.event_id})
     .then(function(err, event){
       if(err){
-        res.send(500, err);
+        res.status(500).send(err);
       }
       event.businesses.push({business_id: req.body.id, votes: 0});
     });
@@ -116,7 +114,7 @@ module.exports = {
     Event.findOne({event_id: req.params.event_id})
     .then(function(err, event){
       if(err){
-        res.send(500, err);
+        res.status(500).send(err);
       }
       res.json(event.businesses);
     });
