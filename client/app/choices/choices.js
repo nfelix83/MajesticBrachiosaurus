@@ -5,11 +5,13 @@ angular.module('clever.choices', [])
   //TODO send and receive preferences on same page how to receive and send/receive
   $scope.preference={
     'term': '',
-    'location': ''
+    'location': '97017'
   };
 
   $scope.searchresults = [];
   $scope.choices = [];
+
+  $scope.getEventDetails
 
   $scope.getChoices=function(){
     Preference.getChoices($scope.choices);
