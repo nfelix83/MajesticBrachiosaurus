@@ -22,7 +22,6 @@ angular.module('clever.choices', [])
     $scope.searchresults = [];
     Preference.sendPreference($scope.preference, $scope.searchresults);
   };
-
   $scope.getChoices=function(){
     Preference.getChoices()
     .then( function (data, err) {
@@ -34,36 +33,42 @@ angular.module('clever.choices', [])
   };
 
   $scope.getEventDetails();
-
-  $scope.storeChoice = Preference.storeChoice;
   //receive choices
   $scope.getChoices();
 })
 
-.factory('Preference', function($http, $routeParams){
+.factory('Preference', function ($http, $routeParams) {
   //send request to yelp api
   var defaultImagePath = '../../assets/default_business.jpg';
 
-  var sendPreference=function(term, resultsArray){
+  var sendPreference = function (term, resultsArray) {
     return $http({
       method: 'Get',
       url:'/' + $routeParams.event_id + '/search',
       params: term
-    }).then(function(data,err){
-      for(var i = 0; i < data.data.length; i++){
-        console.log(data.data[i].image_url);
-        if(data.data[i].image_url === undefined){
-          data.data[i].image_url = defaultImagePath;
+    }).then(function (res,err) {
+      for (var i = 0; i < res.data.length; i++) {
+        console.log(res.data[i].image_url);
+        if (res.data[i].image_url === undefined) {
+          res.data[i].image_url = defaultImagePath;
         }
-        resultsArray.push(data.data[i]);
+        resultsArray.push(res.data[i]);
       }
     });
   };
 
-  var getChoices=function(choicesArray){
+  var getChoices = function(){
+    var choicesArray = [];
     return $http({
       method: 'Get',
       url:'/' + $routeParams.event_id + '/saved',
+    }).then(function (data,err) {
+      console.log('getChoices got back from server:', data);
+      for (var i = 0; i < data.data.length; i++) {
+        choicesArray.push(data.data[i]);
+      }
+      console.log('returning:', choicesArray);
+      return choicesArray;
     });
   };
 
@@ -75,7 +80,7 @@ angular.module('clever.choices', [])
       data: {
         id: business_id
       }
-    }).then(function(data,err){
+    }).then(function (data,err) {
       if(err){
         console.error(err);
       } else {
