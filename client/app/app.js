@@ -4,7 +4,8 @@ angular.module('clever', [
   'ngMaterial',
   'ngRoute'
 ])
-.config(function($locationProvider, $routeProvider, $httpProvider, $routeParams){
+
+.config(function($locationProvider, $routeProvider, $httpProvider){
   $routeProvider
     .when('/', {
       templateUrl: 'app/event/event.html',
@@ -20,22 +21,3 @@ angular.module('clever', [
 
   $locationProvider.html5Mode(true);
 });
-
-// .config(function($routeProvider){
-//   $routeProvider
-//     .when('/newEvent',
-//       {
-//         controller:'EventController',
-//         templateUrl: 'newEvent.html'
-//       })
-//     .when('/:event_id',
-//       {
-//         controller:'userController',
-//         templateUrl: 'userPreference.html'
-//       })
-//     .otherwise('/',
-//       {
-//            templateUrl:'home.html'
-//       })
-
-// })
