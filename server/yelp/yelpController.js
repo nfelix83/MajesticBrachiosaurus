@@ -1,6 +1,8 @@
 var Promise = require('bluebird');
 var Yelp = require('yelp');
 
+var Event = require('../events/eventModel.js');
+
 var yelp = new Yelp({
   consumer_key: 'XrFzdiNnx_d3yIqlzmwG6g',
   consumer_secret: 'YIFLNTDrzekdfcsdFzXe8ygwBQ0',
@@ -43,6 +45,8 @@ module.exports = {
         });
       }*/
 
+    req.query.limit = req.query.limit || 5;
+
     yelp.search(req.query)
     .then(function(data){
       var businesses = [];
@@ -52,6 +56,7 @@ module.exports = {
           businesses.push(result);
           if(businesses.length === parseInt(req.query.limit)){
             res.json(businesses);
+            console.log("BOOM")
           }
         })
         .catch(function(err){

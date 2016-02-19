@@ -7,37 +7,65 @@ angular.module('clever.choices', [])
   $scope.preference={
     'term': ''
   };
+
+  $scope.searchresults = [];
+  $scope.choices = [];
+
   $scope.getChoices=function(){
-    Preference.getChoices();
+    Preference.getChoices($scope.choices);
   };
+
   //receive choices
   $scope.getChoices();
+
   $scope.sendPreference= function(){
-    Preference.sendPreference($scope.preference);
+    Preference.sendPreference($scope.preference, $scope.searchresults);
   };
 })
 
 .factory('Preference', function($http, $routeParams){
   //send request to yelp api
-  var sendPreference=function(term){
+  var sendPreference=function(term, resultsArray){
     return $http({
-      method: 'Post',
+      method: 'Get',
       url:'/' + $routeParams.event_id + '/search',
-      data: term
-    }).then(function(err,data){
-      res.send(data);
+      params: term
+    }).then(function(data,err){
+      for(var i = 0; i < data.data.length; i++){
+        resultsArray.push(data.data[i]);
+      };
     });
   };
-  var getChoices=function(){
+
+  var getChoices=function(choicesArray){
     return $http({
       method: 'Get',
       url:'/' + $routeParams.event_id + '/saved',
-    }).then(function(err,data){
-      res.send(data);
+    }).then(function(data,err){
+      choicesArray = [];
+      for(var i = 0; i < data.data.length; i++){
+        choicesArray.push(data.data[i]);
+      };
     });
   };
+
+  var storeChoice = function (business_id) {
+    $http({
+      method: 'Post',
+      url: '/' + $routeParams.event_id + '/store',
+      data: {
+        id: business_id
+      }
+    }).then(function(data,err){
+      if(err){
+        console.error(err);
+      }
+    });
+  }
+
   return {
     sendPreference:sendPreference,
-    getChoices:getChoices
+    getChoices:getChoices,
+    storeChoice:storeChoice
   };
 });
