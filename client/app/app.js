@@ -11,6 +11,10 @@ angular.module('clever', [
       templateUrl: 'app/event/event.html',
       controller: 'EventController'
     })
+    .when('/choices', {
+      templateUrl: 'app/choices/choices.html',
+      controller: 'PreferenceController'
+    })
     .when('/:event_id', {
       templateUrl : 'app/choices/choices.html',
       controller: 'PreferenceController'

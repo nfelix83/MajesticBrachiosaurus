@@ -1,6 +1,5 @@
 angular.module('clever.choices', [])
-  .controller('ChoicesController', function($scope){
-})
+
 
 .controller('PreferenceController', function($scope,Preference,$routeParams){
   //TODO send and receive preferences on same page how to receive and send/receive
