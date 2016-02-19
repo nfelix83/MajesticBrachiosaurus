@@ -119,7 +119,7 @@ module.exports = {
       if(err){
         res.status(500).send(err);
       }
-      res.json(event.businesses);
+      res.json(event.choices.businesses);
     });
   }
 }
