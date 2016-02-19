@@ -11,12 +11,11 @@ var yelpRoutes = require('./yelp/yelpRoutes.js');
 
 mongoose.connect('mongodb://localhost/brachiosaurus');
 
-app.use(express.static(__dirname + '/../../client'));
+app.use(express.static(__dirname + '../../client'));
 
 app.get('/', function(req, res) {
-  res.end('hello world');
+  res.send(200, '/');
 });
-
 
 app.listen(port, function() {
   console.log('Listening on port ' + port);

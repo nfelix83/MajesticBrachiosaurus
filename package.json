@@ -1,7 +1,7 @@
 {
-  "name": "clever-app",
-  "version": "1.0.0",
-  "description": "",
+  "name": "majesticbrachiosaurus",
+  "version": "0.0.1",
+  "description": "A Yelp decision maker",
   "main": "server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,11 +12,10 @@
     "url": "git+https://github.com/MajesticBrachiosaurus/MajesticBrachiosaurus.git"
   },
   "author": "JLo, Justin, Noel, Jisoo",
-  "license": "ISC",
+  "license": "",
   "bugs": {
     "url": "https://github.com/jyoon006/MajesticBrachiosaurus/issues"
   },
-  "homepage": "https://github.com/MajesticBrachiosaurus/MajesticBrachiosaurus#readme",
   "dependencies": {
     "bluebird": "^3.3.1",
     "express": "^4.13.4",

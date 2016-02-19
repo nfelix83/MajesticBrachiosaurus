@@ -1,0 +1,20 @@
+{
+  "name": "majesticbrachiosaurus",
+  "description": "A Yelp decision maker",
+  "license": "",
+  "homepage": "https://github.com/jbitely/MajesticBrachiosaurus",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.0",
+    "underscore": "^1.8.3",
+    "angular-material": "^1.0.5",
+    "angular-route": "^1.5.0"
+  }
+}
