@@ -20,7 +20,8 @@ angular.module('clever.event', [])
       method: 'POST',
       url:'/create',
       data: event
-    }).then(function(res){
+    })
+    .then(function(res){
       return res.data;
     });
   };

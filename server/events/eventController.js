@@ -10,7 +10,7 @@ module.exports = {
 
     Event.findOne({event_id: event_id}, function(err, event) { //check to see if event id exists
       if(err) {
-        return console.error(err);
+        return console.error('err', err);
       }      
       //create new event if event doesn't exist
       if(!event) {
@@ -36,10 +36,16 @@ module.exports = {
     //return data with same event_id
     Event.findOne({event_id: event_id}, function(err, event) {
       if(err) {
-        return console.error(err);
+        return console.error('err', err);
       }
-      console.log('event', event);
-      res.json(event);
+      if(event) {
+        console.log('event', event.event_id);
+        res.redirect('/#/' + event.event_id);
+      }
+      else {
+        res.redirect('/');
+      }
+      
     });
   }
 };
