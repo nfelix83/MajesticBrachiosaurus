@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app='App'>
+  <head>
+    <meta charset="utf-8" />
+    <title>Clever App</title>
+    
+    <script src="../../node_modules/angular/angular.js"></script>
+    <script src="js/userInput.js"></script>
+  </head>
+  <body ng-controller="PreferenceController">
+    <h1>Your Preferences</h1>
+    
+   <form ng-submit="sendPreference()">
+    <div class="container"> 
+      Search: <input type="text" ng-model="preference.term" name="term"/> 
+      <input type="submit" id="submit" value="Submit"/>
+    </div>
+    
+    
+    
+  
+    </form>
+
+   <div class="choices">
+    <h2>Choices</h2>
+   </div>
+
+
+    
+  </body>
+</html>
