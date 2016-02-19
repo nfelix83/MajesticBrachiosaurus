@@ -1,22 +1,24 @@
 angular.module('App',['newEvent.js'])
 
 
-.controller('PreferenceController', function($scope,Preference,$routeparams.event_id){
+.controller('PreferenceController', function($scope,Preference,$routeParams.event_id){
   //TODO send and receive preferences on same page how to receive and send/receive
 
   $scope.preference={
-  	'search': ''
+  	'term': ''
   }
 
 
-  $scope.receivePreference=function(){
-  	Preference.receivePreference();
+  $scope.getChoices=function(){
+  	Preference.getChoices();
   }
 
+  //receive choices
+  $scope.getChoices();
 
   $scope.sendPreference= function(){
   	Preference.sendPreference($scope.preference)
-  	Preference.receivePreference();
+  	
   }
   
 
@@ -24,31 +26,33 @@ angular.module('App',['newEvent.js'])
 })
 
 
-.factory('Preference', function($http){
+.factory('Preference', function($http, $routeParams){
    
-  //post to server
-  var sendPreference=function(input){
+  //send request to yelp api
+  var sendPreference=function(term){
   	return $http({
   		method: 'Post',
-  		url:'/api/:event_id',
-  		data: input
+  		url:'/' + $routeParams.event_id + '/search',
+  		data: term
 
   	}).then(function(err,data){
-      //event id
+      
   		res.send(data)
   	})
   }
 
 
-  var receivePreference=function(){
+  var getChoices=function(){
   	return $http({
   		method: 'Get',
-  		url:'/api/:event_id',
+  		url:'/' + $routeParams.event_id + '/saved',
 
   	}).then(function(err,data){
   		res.send(data)
   	})
   }
+
+
 
 
   return {

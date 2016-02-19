@@ -17,6 +17,8 @@ angular.module('Event',[])
 	      templateUrl: 'userPreference.html'
 
 	    })
+
+
 	  .otherwise('/', 
 	    { 
            templateUrl:'home.html'
@@ -28,13 +30,13 @@ angular.module('Event',[])
 .controller('EventController', function($scope,Events,$location){
 
    $scope.event={
-   	  'name':'',
+   	  'event_name':'',
    	  'location':''
    }
    
    $scope.sendNewEvent=function(){
    	 Events.sendNewEvent($scope.event).then(function(data){
-       $location.path('/:event_id')
+       $location.path('/' + data.event_id)
    	 })
    }
 }
@@ -44,7 +46,7 @@ angular.module('Event',[])
 	var sendNewEvent=function(event){
       return $http({
 			method: 'Post',
-			url:'/api/create',
+			url:'/create',
 			data: JSON.stringify(event)
 		}).then(function(res){
 			return res.data
