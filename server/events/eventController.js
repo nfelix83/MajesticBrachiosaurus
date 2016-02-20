@@ -32,14 +32,13 @@ module.exports = {
   getEvent: function(req, res) {
     //when user connects with events_id url that's created
     var event_id = req.params.event_id;
-    console.log(req.params);
     //return data with same event_id
     Event.findOne({event_id: event_id}, function(err, event) {
       if(err) {
         return console.error('err', err);
       }
       if(event) {
-        console.log('event', event.event_id);
+        console.log('get event id', event.event_id);
         res.redirect('/#/' + event.event_id);
       }
       else {
@@ -47,5 +46,18 @@ module.exports = {
       }
       
     });
+  },
+  sendEvent: function(req, res) {
+    var event_id = req.params.event_id;
+    Event.findOne({event_id: event_id}, function(err, event) {
+      if(err) {
+        return console.error('err', err);
+      }
+      if(event) {
+        console.log('send event data', event);
+        res.json(event);
+      }
+    });
+    
   }
 };
