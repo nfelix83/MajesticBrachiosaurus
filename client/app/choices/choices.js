@@ -17,8 +17,16 @@ angular.module('clever.choices', [])
   };
 
   $scope.sendPreference= function () {
-    $scope.searchresults = [];
-    Preference.sendPreference($scope.preference, $scope.searchresults);
+    Preference.sendPreference($scope.preference)
+    .then(function (res,err) {
+      $scope.searchresults = [];
+      for (var i = 0; i < res.data.length; i++) {
+        if (res.data[i].image_url === undefined) {
+          res.data[i].image_url = defaultImagePath;
+        }
+        $scope.searchresults.push(res.data[i]);
+      }
+    });
   };
 
   $scope.getChoices = function () {
@@ -50,18 +58,11 @@ angular.module('clever.choices', [])
   //send request to yelp api
   var defaultImagePath = '../../assets/default_business.jpg';
 
-  var sendPreference = function (term, resultsArray) {
+  var sendPreference = function (term) {
     return $http({
       method: 'Get',
       url:'/' + $routeParams.event_id + '/search',
       params: term
-    }).then(function (res,err) {
-      for (var i = 0; i < res.data.length; i++) {
-        if (res.data[i].image_url === undefined) {
-          res.data[i].image_url = defaultImagePath;
-        }
-        resultsArray.push(res.data[i]);
-      }
     });
   };
 
@@ -70,7 +71,7 @@ angular.module('clever.choices', [])
     return $http({
       method: 'Get',
       url:'/' + $routeParams.event_id + '/saved',
-    })
+    });
   };
 
   var storeChoice = function (business_id) {
