@@ -35,6 +35,11 @@ angular.module('clever.choices', [])
     $scope.searchresults = [];
     Preference.sendPreference($scope.preference, $scope.searchresults);
   };
+
+  $scope.storeChoice = function (business_id) {
+    Preference.storeChoice(business_id);
+    return true;
+  }
 })
 
 .factory('Preference', function($http, $routeParams){
