@@ -6,6 +6,7 @@ angular.module('clever.choices', [])
     'term': ''
   };
 
+
   $scope.searchresults = [];
   $scope.choices = [];
 
@@ -14,6 +15,7 @@ angular.module('clever.choices', [])
       $scope.eventName = data.event_name;
       $scope.location = data.location;
     });
+
   };
 
   $scope.sendPreference= function () {
@@ -32,6 +34,7 @@ angular.module('clever.choices', [])
     });
   };
 
+
   $scope.getChoices = function () {
     Preference.getChoices()
     .then(function (res, err) {
@@ -41,6 +44,7 @@ angular.module('clever.choices', [])
         $scope.choices.push(res.data[i]);
       }
     });
+
   };
 
   $scope.storeChoice = function (choice) {
@@ -95,10 +99,15 @@ angular.module('clever.choices', [])
   };
 
   var getEventDetails = function (cb) {
+
     $http({
       method: 'POST',
       url: '/' + $routeParams.event_id + '/details',
       data: $routeParams
+
+  
+  
+  
     })
     .then(function (res) {
       console.log(res.data);
@@ -124,7 +133,9 @@ angular.module('clever.choices', [])
     getChoices:getChoices,
     storeChoice:storeChoice,
     getEventDetails:getEventDetails,
+
     notInChoices: notInChoices,
     getDefaultImage: getDefaultImage
+
   };
 });

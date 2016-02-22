@@ -20,6 +20,7 @@ angular.module('clever.event', [])
       data: event
     })
     .then(function(res){
+      
       return res.data;
     });
   };
