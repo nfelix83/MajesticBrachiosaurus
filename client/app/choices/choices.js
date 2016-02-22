@@ -1,23 +1,35 @@
 angular.module('clever.choices', [])
 
 
-.controller('PreferenceController', function($scope,Preference,$routeParams){
+.controller('PreferenceController', function($scope, Preference,$routeParams){
   //TODO send and receive preferences on same page how to receive and send/receive
   $scope.preference={
     'term': ''
   };
 
+  
+  
+  $scope.getEventDetails = function(){
+    console.log('rof')
+    Preference.getEventDetails()
+    
+  }
+
+  $scope.getEventDetails();
+  
   $scope.searchresults = [];
   $scope.choices = [];
 
-  $scope.getEventDetails
+  
 
   $scope.getChoices=function(){
     Preference.getChoices($scope.choices);
   };
 
-  //receive choices
+  //receive choices from yelp
+  
   $scope.getChoices();
+  
 
   $scope.sendPreference= function(){
     $scope.searchresults = [];
@@ -36,6 +48,7 @@ angular.module('clever.choices', [])
       url:'/' + $routeParams.event_id + '/search',
       params: term
     }).then(function(data,err){
+
       for(var i = 0; i < data.data.length; i++){
         console.log(data.data[i].image_url)
         if(data.data[i].image_url === undefined){
@@ -72,9 +85,21 @@ angular.module('clever.choices', [])
     });
   };
 
+  var getEventDetails = function(){
+    $http({
+      method: 'Get',
+      url: '/' + $routeParams.event_id + '/details',
+    }).then(function(data){
+      console.log(data,'lol')
+    })
+
+  }
+
+
   return {
     sendPreference:sendPreference,
     getChoices:getChoices,
-    storeChoice:storeChoice
+    storeChoice:storeChoice,
+    getEventDetails:getEventDetails
   };
 });
