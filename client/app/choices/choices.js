@@ -7,11 +7,13 @@ angular.module('clever.choices', [])
   };
 
 
+
   $scope.searchresults = [];
   $scope.choices = [];
 
   $scope.getEventDetails = function () {
     Preference.getEventDetails(function (data) {
+
       $scope.eventName = data.event_name;
       $scope.location = data.location;
     });
@@ -35,6 +37,7 @@ angular.module('clever.choices', [])
   };
 
 
+
   $scope.getChoices = function () {
     Preference.getChoices()
     .then(function (res, err) {
@@ -44,6 +47,7 @@ angular.module('clever.choices', [])
         $scope.choices.push(res.data[i]);
       }
     });
+
 
   };
 
@@ -100,17 +104,16 @@ angular.module('clever.choices', [])
 
   var getEventDetails = function (cb) {
 
+
     $http({
       method: 'POST',
       url: '/' + $routeParams.event_id + '/details',
-      data: $routeParams
-
-  
-  
-  
+      data: $routeParams  
     })
+
     .then(function (res) {
       console.log(res.data);
+
       cb(res.data);
     });
   };
