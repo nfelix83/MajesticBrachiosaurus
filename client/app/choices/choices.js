@@ -59,19 +59,12 @@ angular.module('clever.choices', [])
     });
   };
 
-  var getChoices = function(cb){
+  var getChoices = function(){
     var choicesArray = [];
     return $http({
       method: 'Get',
       url:'/' + $routeParams.event_id + '/saved',
-    }).then(function (res, err) {
-      console.log('getChoices got back from server:', res);
-      for (var i = 0; i < res.data.length; i++) {
-        choicesArray.push(res.data[i]);
-      }
-      console.log('choicesArray is now:', choicesArray);
-      cb(choicesArray);
-    });
+    })
   };
 
   var storeChoice = function (business_id) {
