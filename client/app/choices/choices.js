@@ -10,10 +10,14 @@ angular.module('clever.choices', [])
   
   
   $scope.getEventDetails = function(){
-    console.log('rof')
-    Preference.getEventDetails()
+    console.log('rof');
+    Preference.getEventDetails(function(data) {
+      console.log(data);
+      $scope.eventName = data.event_name;
+      $scope.location = data.location;
+    });
     
-  }
+  };
 
   $scope.getEventDetails();
   
@@ -85,15 +89,19 @@ angular.module('clever.choices', [])
     });
   };
 
-  var getEventDetails = function(){
+  var getEventDetails = function(cb){
+    console.log($routeParams);
     $http({
-      method: 'Get',
+      method: 'POST',
       url: '/' + $routeParams.event_id + '/details',
-    }).then(function(data){
-      console.log(data,'lol')
+      data: $routeParams
     })
+    .then(function(res){
+      console.log(res.data);
+      cb(res.data);
+    });
 
-  }
+  };
 
 
   return {

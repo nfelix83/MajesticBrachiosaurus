@@ -48,7 +48,9 @@ module.exports = {
     });
   },
   sendEvent: function(req, res) {
+    console.log(req.body);
     var event_id = req.params.event_id;
+    console.log(req.params);
     Event.findOne({event_id: event_id}, function(err, event) {
       if(err) {
         return console.error('err', err);
