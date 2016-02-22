@@ -14,7 +14,7 @@ Your Location is: {{location}}
   </div>
 </form>
 <div class="searchresults md-padding" layout="row" layout-wrap>
-  <md-card ng-repeat="result in searchresults" style="width: 300px">
+  <md-card ng-hide='result.hide' ng-repeat="result in searchresults" style="width: 300px">
     <img ng-src={{result.image_url}} class="md-card-image" alt="image caption">
     <md-card-title>
       <md-card-title-text>
@@ -22,8 +22,8 @@ Your Location is: {{location}}
       </md-card-title-text>
     </md-card-title>
     <md-card-actions layout="row" layout-align="start center">
-      <md-button>Save</md-button>
-      <md-button>Dismiss</md-button>
+      <md-button ng-click='result.hide = storeChoice(result.id)'>Save</md-button>
+      <md-button ng-click='result.hide = true'>Dismiss</md-button>
       <md-card-icon-actions>
         <md-button class="md-icon-button" aria-label="icon">
           <md-icon md-svg-icon="icon"></md-icon>
