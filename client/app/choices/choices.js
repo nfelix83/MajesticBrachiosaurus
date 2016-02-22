@@ -1,6 +1,6 @@
 angular.module('clever.choices', [])
 
-.controller('PreferenceController', function($scope, Preference,$routeParams){
+.controller('PreferenceController', function($scope, Preference, $routeParams, $mdToast){
   //TODO send and receive preferences on same page how to receive and send/receive
   $scope.preference = {
     'term': ''
@@ -32,8 +32,13 @@ angular.module('clever.choices', [])
   };
 
   $scope.storeChoice = function (choice) {
-    Preference.storeChoice(choice.id);
-    $scope.choices.push(choice);
+    if (Preference.notInChoices(choice, $scope.choices)) {
+      Preference.storeChoice(choice.id);
+      $scope.choices.push(choice);
+      $mdToast.showSimple('Saved');
+    } else {
+      $mdToast.showSimple('Already saved');
+    }
     return true;
   }
 
@@ -96,10 +101,20 @@ angular.module('clever.choices', [])
     });
   };
 
+  var notInChoices = function (newChoice, choices) {
+    for (var i = 0; i < choices.length; i++) {
+      if (choices[i].id === newChoice.id) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   return {
     sendPreference:sendPreference,
     getChoices:getChoices,
     storeChoice:storeChoice,
-    getEventDetails:getEventDetails
+    getEventDetails:getEventDetails,
+    notInChoices: notInChoices
   };
 });
