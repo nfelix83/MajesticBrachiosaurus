@@ -24,7 +24,7 @@ angular.module('clever.choices', [])
   };
   $scope.getChoices=function(){
     Preference.getChoices()
-    .then( function (data, err) {
+    .then(function (data, err) {
       $scope.choices = [];
       for(var i = 0; i < data.data.length; i++){
         $scope.choices.push(data.data[i]);
@@ -59,18 +59,18 @@ angular.module('clever.choices', [])
     });
   };
 
-  var getChoices = function(){
+  var getChoices = function(cb){
     var choicesArray = [];
     return $http({
       method: 'Get',
       url:'/' + $routeParams.event_id + '/saved',
-    }).then(function (res,err) {
+    }).then(function (res, err) {
       console.log('getChoices got back from server:', res);
       for (var i = 0; i < res.data.length; i++) {
         choicesArray.push(res.data[i]);
       }
       console.log('choicesArray is now:', choicesArray);
-      return choicesArray;
+      cb(choicesArray);
     });
   };
 
