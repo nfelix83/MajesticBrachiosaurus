@@ -115,11 +115,28 @@ module.exports = {
 
   getBusinesses: function(req, res){
     Event.findOne({event_id: req.params.event_id})
-    .then(function(event, err){
+    .exec().then(function(event, err){
       if(err){
         res.status(500).send(err);
       }
-      res.json(event.choices.businesses);
+      var businesses = [];
+      Promise.each(event.choices.businesses, function(business){
+        yelp.business(business.business_id)
+        .then(function(result){
+          businesses.push(result);
+          if(businesses.length === event.choices.businesses.length){
+            res.json(businesses);
+          }
+        })
+        .catch(function(err){
+          console.error('inEach: ' + err);
+          res.status(500).send(err);
+        });
+      })
+      .catch(function(err){
+        console.error('inSearchThen: ' + err);
+        res.status(500).send(err);
+      });
     });
   }
 }

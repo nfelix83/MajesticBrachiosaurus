@@ -27,7 +27,13 @@ angular.module('clever.choices', [])
   
 
   $scope.getChoices=function(){
-    Preference.getChoices($scope.choices);
+    Preference.getChoices()
+    .then( function (data, err) {
+      $scope.choices = [];
+      for(var i = 0; i < data.data.length; i++){
+        $scope.choices.push(data.data[i]);
+      }
+    });
   };
 
   //receive choices from yelp
@@ -42,6 +48,7 @@ angular.module('clever.choices', [])
 
   $scope.storeChoice = function (business_id) {
     Preference.storeChoice(business_id);
+    $scope.getChoices();
     return true;
   }
 })
@@ -59,7 +66,6 @@ angular.module('clever.choices', [])
     }).then(function(data,err){
 
       for(var i = 0; i < data.data.length; i++){
-        console.log(data.data[i].image_url)
         if(data.data[i].image_url === undefined){
           data.data[i].image_url = defaultImagePath;
         }
@@ -72,11 +78,6 @@ angular.module('clever.choices', [])
     return $http({
       method: 'Get',
       url:'/' + $routeParams.event_id + '/saved',
-    }).then(function(data,err){
-      choicesArray = [];
-      for(var i = 0; i < data.data.length; i++){
-        choicesArray.push(data.data[i]);
-      }
     });
   };
 
