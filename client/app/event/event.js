@@ -11,7 +11,7 @@ angular.module('clever.event', [])
 
     Events.sendNewEvent($scope.event)
     .then(function(data){
-      console.log('data', data);
+      //console.log('data', data);
       $location.path('/' + data.event_id);
     });
   };
@@ -30,7 +30,7 @@ angular.module('clever.event', [])
     });
   };
   
-  }
+  
 
   return {
     sendNewEvent : sendNewEvent

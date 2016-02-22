@@ -10,6 +10,7 @@ angular.module('clever.choices', [])
   
   
   $scope.getEventDetails = function(){
+    console.log('rof')
     Preference.getEventDetails()
     
   }
@@ -89,7 +90,7 @@ angular.module('clever.choices', [])
       method: 'Get',
       url: '/' + $routeParams.event_id + '/details',
     }).then(function(data){
-      console.log(data)
+      console.log(data,'lol')
     })
 
   }
