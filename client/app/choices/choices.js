@@ -6,28 +6,27 @@ angular.module('clever.choices', [])
     'term': ''
   };
 
-  $scope.getEventDetails = function(){
-    console.log('rof');
-    Preference.getEventDetails(function(data) {
-      console.log(data);
+  $scope.searchresults = [];
+  $scope.choices = [];
+
+  $scope.getEventDetails = function () {
+    Preference.getEventDetails(function (data) {
       $scope.eventName = data.event_name;
       $scope.location = data.location;
     });
   };
 
-  $scope.searchresults = [];
-  $scope.choices = [];
-
-  $scope.sendPreference= function(){
+  $scope.sendPreference= function () {
     $scope.searchresults = [];
     Preference.sendPreference($scope.preference, $scope.searchresults);
   };
-  $scope.getChoices=function(){
+
+  $scope.getChoices = function () {
     Preference.getChoices()
-    .then(function (data, err) {
+    .then(function (res, err) {
       $scope.choices = [];
-      for(var i = 0; i < data.data.length; i++){
-        $scope.choices.push(data.data[i]);
+      for (var i = 0; i < res.data.length; i++) {
+        $scope.choices.push(res.data[i]);
       }
     });
   };
@@ -35,7 +34,6 @@ angular.module('clever.choices', [])
   $scope.storeChoice = Preference.storeChoice;
 
   $scope.getEventDetails();
-  //receive choices
   $scope.getChoices();
 })
 
@@ -50,7 +48,6 @@ angular.module('clever.choices', [])
       params: term
     }).then(function (res,err) {
       for (var i = 0; i < res.data.length; i++) {
-        console.log(res.data[i].image_url);
         if (res.data[i].image_url === undefined) {
           res.data[i].image_url = defaultImagePath;
         }
@@ -59,7 +56,7 @@ angular.module('clever.choices', [])
     });
   };
 
-  var getChoices = function(){
+  var getChoices = function () {
     var choicesArray = [];
     return $http({
       method: 'Get',
@@ -68,7 +65,6 @@ angular.module('clever.choices', [])
   };
 
   var storeChoice = function (business_id) {
-    console.log('storing', business_id);
     $http({
       method: 'Post',
       url: '/' + $routeParams.event_id + '/store',
@@ -84,14 +80,13 @@ angular.module('clever.choices', [])
     });
   };
 
-  var getEventDetails = function(cb){
-    console.log($routeParams);
+  var getEventDetails = function (cb) {
     $http({
       method: 'POST',
       url: '/' + $routeParams.event_id + '/details',
       data: $routeParams
     })
-    .then(function(res){
+    .then(function (res) {
       console.log(res.data);
       cb(res.data);
     });
