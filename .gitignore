@@ -5,3 +5,5 @@ bower_components/
 build/
 dist/
 client/lib/
+
+_.DS_Store

@@ -1,84 +1,67 @@
 angular.module('clever.choices', [])
 
-
 .controller('PreferenceController', function($scope, Preference,$routeParams){
   //TODO send and receive preferences on same page how to receive and send/receive
-  $scope.preference={
+  $scope.preference = {
     'term': ''
   };
 
-  
-  
-  $scope.getEventDetails = function(){
-    console.log('rof');
-    Preference.getEventDetails(function(data) {
-      console.log(data);
-      $scope.eventName = data.event_name;
-      $scope.location = data.location;
-    });
-    
-  };
-
-  $scope.getEventDetails();
-  
   $scope.searchresults = [];
   $scope.choices = [];
 
-  
-
-  $scope.getChoices=function(){
-    Preference.getChoices()
-    .then( function (data, err) {
-      $scope.choices = [];
-      for(var i = 0; i < data.data.length; i++){
-        $scope.choices.push(data.data[i]);
-      }
+  $scope.getEventDetails = function () {
+    Preference.getEventDetails(function (data) {
+      $scope.eventName = data.event_name;
+      $scope.location = data.location;
     });
   };
 
-  //receive choices from yelp
-  
-  $scope.getChoices();
-  
-
-  $scope.sendPreference= function(){
+  $scope.sendPreference= function () {
     $scope.searchresults = [];
     Preference.sendPreference($scope.preference, $scope.searchresults);
   };
 
-  $scope.storeChoice = function (business_id) {
-    Preference.storeChoice(business_id);
-    $scope.getChoices();
-    return true;
-  }
-})
-
-.factory('Preference', function($http, $routeParams){
-  //send request to yelp api
-
-  var defaultImagePath = 'http://www.acclaimclipart.com/free_clipart_images/generic_sign_for_a_restaurant_with_a_spoon_and_fork_crossed_to_suggest_a_dining_establishment_0515-1011-1202-2158_SMU.jpg';
-
-  var sendPreference=function(term, resultsArray){
-    return $http({
-      method: 'Get',
-      url:'/' + $routeParams.event_id + '/search',
-      params: term
-    }).then(function(data,err){
-
-      for(var i = 0; i < data.data.length; i++){
-        if(data.data[i].image_url === undefined){
-          data.data[i].image_url = defaultImagePath;
-        }
-        resultsArray.push(data.data[i]);
+  $scope.getChoices = function () {
+    Preference.getChoices()
+    .then(function (res, err) {
+      $scope.choices = [];
+      for (var i = 0; i < res.data.length; i++) {
+        $scope.choices.push(res.data[i]);
       }
     });
   };
 
-  var getChoices=function(choicesArray){
+  $scope.storeChoice = Preference.storeChoice;
+
+  $scope.getEventDetails();
+  $scope.getChoices();
+})
+
+.factory('Preference', function ($http, $routeParams) {
+  //send request to yelp api
+  var defaultImagePath = '../../assets/default_business.jpg';
+
+  var sendPreference = function (term, resultsArray) {
+    return $http({
+      method: 'Get',
+      url:'/' + $routeParams.event_id + '/search',
+      params: term
+    }).then(function (res,err) {
+      for (var i = 0; i < res.data.length; i++) {
+        if (res.data[i].image_url === undefined) {
+          res.data[i].image_url = defaultImagePath;
+        }
+        resultsArray.push(res.data[i]);
+      }
+    });
+  };
+
+  var getChoices = function () {
+    var choicesArray = [];
     return $http({
       method: 'Get',
       url:'/' + $routeParams.event_id + '/saved',
-    });
+    })
   };
 
   var storeChoice = function (business_id) {
@@ -88,27 +71,26 @@ angular.module('clever.choices', [])
       data: {
         id: business_id
       }
-    }).then(function(data,err){
+    }).then(function (data,err) {
       if(err){
         console.error(err);
+      } else {
+        getChoices();
       }
     });
   };
 
-  var getEventDetails = function(cb){
-    console.log($routeParams);
+  var getEventDetails = function (cb) {
     $http({
       method: 'POST',
       url: '/' + $routeParams.event_id + '/details',
       data: $routeParams
     })
-    .then(function(res){
+    .then(function (res) {
       console.log(res.data);
       cb(res.data);
     });
-
   };
-
 
   return {
     sendPreference:sendPreference,
