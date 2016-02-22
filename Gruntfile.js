@@ -1,15 +1,15 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    concat: {
-      options: {
-        separator: ';',
-      },
-      dist: {
-        src: ['/*.js'],
-        dest: '.js',
-      },   
-    },
+    // concat: {
+    //   options: {
+    //     separator: ';',
+    //   },
+    //   dist: {
+    //     src: ['/*.js'],
+    //     dest: '.js',
+    //   },   
+    // },
 
     nodemon: {
       dev: {
@@ -17,49 +17,49 @@ module.exports = function(grunt) {
       }
     },
 
-    uglify: {
-      build: {
-        src: '.js',
-        dest: '.min.js'
-      }
-    },
+    // uglify: {
+    //   build: {
+    //     src: '.js',
+    //     dest: '.min.js'
+    //   }
+    // },
 
-    jshint: {
-      files: ['*.js', 'server/**/*.js', 'client/**/*.js'],
-      options: {
-        force: 'true',
-        jshintrc: '.jshintrc',
-        ignores: []
-      }
-    },
+    // jshint: {
+    //   files: ['*.js', 'server/**/*.js', 'client/**/*.js'],
+    //   options: {
+    //     force: 'true',
+    //     jshintrc: '.jshintrc',
+    //     ignores: []
+    //   }
+    // },
 
-    cssmin: {
-      target: {
-        files: [{
-          expand: true,
-          cwd: 'public',
-          src: ['*.css', '!*.min.css'],
-          dest: '',
-          ext: '.min.css'
-        }]
-      }
-    },
+    // cssmin: {
+    //   target: {
+    //     files: [{
+    //       expand: true,
+    //       cwd: 'public',
+    //       src: ['*.css', '!*.min.css'],
+    //       dest: '',
+    //       ext: '.min.css'
+    //     }]
+    //   }
+    // },
 
     watch: {
       scripts: {
         files: [
           'server/**/*.js',
           'client/**/*.js'
-        ],
-        tasks: [
-          'concat',
-          'uglify'
         ]
-      },
-      css: {
-        files: '',
-        tasks: ['cssmin']
+        // tasks: [
+        //   'concat',
+        //   'uglify'
+        // ]
       }
+      // css: {
+      //   files: '',
+      //   tasks: ['cssmin']
+      // }
     },
 
     shell: {
@@ -95,13 +95,13 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('test', [
-    'jshint'
+    // 'jshint'
   ]);
 
   grunt.registerTask('build', [
-    'concat',
-    'uglify',
-    'cssmin'
+    // 'concat',
+    // 'uglify',
+    // 'cssmin'
   ]);
 
   grunt.registerTask('upload', function(n) {
