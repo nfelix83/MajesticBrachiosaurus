@@ -7,7 +7,7 @@ angular.module('clever.event', [])
   $scope.sendNewEvent = function(){
     //Events.setLocation($scope.event.location);
     
-    Events.setEventName($scope.event);
+    
 
     Events.sendNewEvent($scope.event)
     .then(function(data){
@@ -29,23 +29,12 @@ angular.module('clever.event', [])
       return res.data;
     });
   };
-  var setLocation = function(location){
-    
-    return location;
-  }
-  var setEventName = function(event){
-    console.log(event.event_name,'ohmai');
-    savedData=event;
-  }
-  var get = function(){
-    return savedData;
+  
   }
 
   return {
-    sendNewEvent : sendNewEvent,
-    //setLocation : setLocation,
-    setEventName : setEventName,
-    get:get
+    sendNewEvent : sendNewEvent
+    
   };
   
 })
