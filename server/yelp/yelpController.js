@@ -102,7 +102,6 @@ module.exports = {
   },
 
   storeBusiness: function(req, res){
-    console.log("storeBusiness:", req);
     Event.findOne({event_id: req.params.event_id})
     .then(function(event, err){
       if(err){

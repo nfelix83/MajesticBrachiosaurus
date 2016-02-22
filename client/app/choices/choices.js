@@ -31,7 +31,11 @@ angular.module('clever.choices', [])
     });
   };
 
-  $scope.storeChoice = Preference.storeChoice;
+  $scope.storeChoice = function (choice) {
+    Preference.storeChoice(choice.id);
+    $scope.choices.push(choice);
+    return true;
+  }
 
   $scope.getEventDetails();
   $scope.getChoices();
