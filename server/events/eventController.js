@@ -6,6 +6,7 @@ module.exports = {
     console.log('req', req.body);
     var event_name = req.body.event_name;
     var location = req.body.location;
+    var radius = req.body.radius;
     var event_id = randomWords({exactly: 2}).join(""); //generate two random word to make it as event_id
 
     Event.findOne({event_id: event_id}, function(err, event) { //check to see if event id exists
@@ -17,7 +18,8 @@ module.exports = {
         Event.create({
           event_id: event_id,
           event_name: event_name,
-          location: location
+          location: location,
+          radius: radius
         }, function(err, event) {
           if(err) {
             return console.error(err);
