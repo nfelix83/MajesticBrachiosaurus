@@ -66,7 +66,9 @@ angular.module('clever.choices', [])
       $mdToast.showSimple('Already saved');
     }
     return true;
+
   };
+
 
   $scope.getEventDetails();
   $scope.getChoices();
@@ -95,6 +97,16 @@ angular.module('clever.choices', [])
   var storeChoice = function (business_id) {
     return $http({
       method: 'Post',
+      url: '/' + $routeParams.event_id + '/store',
+      data: {
+        id: business_id
+      }
+    });
+  };
+
+  var removeChoice = function (business_id) {
+    return $http({
+      method: 'Delete',
       url: '/' + $routeParams.event_id + '/store',
       data: {
         id: business_id
@@ -137,8 +149,10 @@ angular.module('clever.choices', [])
     storeChoice:storeChoice,
     getEventDetails:getEventDetails,
 
+
     notInChoices: notInChoices,
     getDefaultImage: getDefaultImage
+
 
   };
 });
