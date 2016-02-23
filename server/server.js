@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 
 var app = express();
 var port = process.env.PORT || 8000;
-var uri = 'mongodb://testing:testing@ds013918.mongolab.com:13918/heroku_p92qhfjt' || 'mongodb://localhost/brachiosaurus';
+var uri = 'mongodb://heroku_p92qhfjt:8pa20rm23gnmsicf7jdo96c2oa@ds013918.mongolab.com:13918/heroku_p92qhfjt' || 'mongodb://localhost/brachiosaurus';
 mongoose.connect(uri);
 
 app.use(bodyParser.urlencoded({extended: true}));
