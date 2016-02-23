@@ -23,13 +23,12 @@
         <img ng-src={{result.image_url}} alt="image caption">
         <md-card-title>
           <md-card-title-text>
-            <span class="md-subhead resultname">{{result.name}}</span>
+            <span class="md-title">{{result.name}}</span>
           </md-card-title-text>
         </md-card-title>
         <md-card-content layout="column">
             <div layout="column">
               <a ng-href={{result.url}}><img ng-src={{result.rating_img_url}} /></a>
-              <span flex></span>
               <a ng-href={{result.url}}><img src="assets/yelp-logo-xsmall.png" /></a>
             </div>
         </md-card-content>
