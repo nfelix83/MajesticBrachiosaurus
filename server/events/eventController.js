@@ -8,6 +8,12 @@ module.exports = {
     var location = req.body.location;
     var radius = req.body.radius;
     var event_id = randomWords({exactly: 2}).join(""); //generate two random word to make it as event_id
+    var usersArray = [];
+    usersArray.push({
+      ip: req.ip.split('.').join('-'),
+      votesCast: 0,
+      choicesMade: 0
+    });
 
     Event.findOne({event_id: event_id}, function(err, event) { //check to see if event id exists
       if(err) {
@@ -19,7 +25,8 @@ module.exports = {
           event_id: event_id,
           event_name: event_name,
           location: location,
-          radius: radius
+          radius: radius,
+          users: usersArray
         }, function(err, event) {
           if(err) {
             return console.error(err);
@@ -40,6 +47,21 @@ module.exports = {
         return console.error('err', err);
       }
       if(event) {
+        var formattedIP = req.ip.split('.').join('-');
+        var existingUser = false;
+        for (var i = 0; i < event.users.length; i++) {
+          if (event.users[i].ip === formattedIP) {
+            existingUser = true;
+            break;
+          }
+        }
+        if (existingUser === false) {
+          event.users.push({
+            ip: formattedIP,
+            votesCast: 0,
+            choicesMade: 0
+          });
+        }
         console.log('get event id', event.event_id);
         res.redirect('/#/' + event.event_id);
       }
@@ -58,6 +80,21 @@ module.exports = {
         return console.error('err', err);
       }
       if(event) {
+        var formattedIP = req.ip.split('.').join('-');
+        var existingUser = false;
+        for (var i = 0; i < event.users.length; i++) {
+          if (event.users[i].ip === formattedIP) {
+            existingUser = true;
+            break;
+          }
+        }
+        if (existingUser === false) {
+          event.users.push({
+            ip: formattedIP,
+            votesCast: 0,
+            choicesMade: 0
+          });
+        }
         console.log('send event data', event);
         res.json(event);
       }

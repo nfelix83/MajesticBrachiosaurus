@@ -41,9 +41,15 @@ angular.module('clever.choices', [])
 
   $scope.storeChoice = function (choice) {
     if (Preference.notInChoices(choice, $scope.choices)) {
-      Preference.storeChoice(choice.id);
-      $scope.choices.push(choice);
-      $mdToast.showSimple('Saved');
+      Preference.storeChoice(choice.id)
+      .then(function success (response) {
+        $scope.choices.push(choice);
+        $mdToast.showSimple('Saved');
+        }, function error (response) {
+          if (response.status === 418) {
+            $mdToast.showSimple('Limit reached');
+          }
+      });
     } else {
       $mdToast.showSimple('Already saved');
     }
@@ -75,17 +81,11 @@ angular.module('clever.choices', [])
   };
 
   var storeChoice = function (business_id) {
-    $http({
+    return $http({
       method: 'Post',
       url: '/' + $routeParams.event_id + '/store',
       data: {
         id: business_id
-      }
-    }).then(function (data,err) {
-      if(err){
-        console.error(err);
-      } else {
-        getChoices();
       }
     });
   };
