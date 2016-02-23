@@ -10,6 +10,8 @@ var yelp = new Yelp({
   token_secret: 'h4supFvwL9h447AldVkG-WbsXqU'
 });
 
+var choicesLimit = 3;
+
 module.exports = {
   search: function(req, res){
     /*
@@ -105,12 +107,29 @@ module.exports = {
   storeBusiness: function(req, res){
     Event.findOne({event_id: req.params.event_id})
     .then(function(event, err){
+      var formattedIP = req.ip.split('.').join('-');
       if(err){
         res.status(500).send(err);
       }
-      event.choices.businesses.push({business_id: req.body.id, votes: 0});
-      event.save();
-      res.status(201).send();
+      var formattedIP = req.ip.split('.').join('-');
+      var userIndex = -1;
+      for (var i = 0; i < event.users.length; i++) {
+        if (event.users[i].ip === formattedIP) {
+          userIndex = i;
+          break;
+        }
+      }
+      if (userIndex < 0) {
+        res.status(500).send('Please reload event page');
+      }
+      if (event.users[userIndex].choicesMade < choicesLimit) {
+        event.choices.businesses.push({business_id: req.body.id, votes: 0});
+        event.users[userIndex].set({choicesMade: event.users[userIndex].choicesMade + 1});
+        event.save();
+        res.status(201).send();
+      } else {
+        res.status(401).send();
+      }
     });
   },
 

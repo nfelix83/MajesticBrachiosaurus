@@ -9,7 +9,11 @@ var EventSchema = new Schema({
   choices: {
     businesses: Array
   },
-  users: Object
+  users: [{
+    ip: String,
+    choicesMade: Number,
+    votesCast: Number
+  }]
 });
 
 module.exports = mongoose.model('Event', EventSchema);
