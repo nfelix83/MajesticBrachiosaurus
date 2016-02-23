@@ -139,6 +139,7 @@ module.exports = {
       Promise.each(event.choices.businesses, function(business){
         yelp.business(business.business_id)
         .then(function(result){
+          result.votes = business.votes;
           businesses.push(result);
           if(businesses.length === event.choices.businesses.length){
             res.json(businesses);

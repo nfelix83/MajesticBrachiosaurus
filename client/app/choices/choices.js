@@ -34,6 +34,7 @@ angular.module('clever.choices', [])
     .then(function (res, err) {
       $scope.choices = [];
       for (var i = 0; i < res.data.length; i++) {
+        console.log(res.data[i]);
         $scope.choices.push(res.data[i]);
       }
     });
