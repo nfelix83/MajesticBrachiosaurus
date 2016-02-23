@@ -22,7 +22,7 @@ angular.module('clever.choices', [])
       $scope.searchresults = [];
       for (var i = 0; i < res.data.length; i++) {
         if (res.data[i].image_url === undefined) {
-          res.data[i].image_url = defaultImagePath;
+          res.data[i].image_url = Preference.getDefaultImage();
         }
         $scope.searchresults.push(res.data[i]);
       }
@@ -111,11 +111,16 @@ angular.module('clever.choices', [])
     return true;
   };
 
+  var getDefaultImage = function () {
+    return defaultImagePath;
+  };
+
   return {
     sendPreference:sendPreference,
     getChoices:getChoices,
     storeChoice:storeChoice,
     getEventDetails:getEventDetails,
-    notInChoices: notInChoices
+    notInChoices: notInChoices,
+    getDefaultImage: getDefaultImage
   };
 });

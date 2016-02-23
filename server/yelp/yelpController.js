@@ -11,6 +11,7 @@ var yelp = new Yelp({
 });
 
 var choicesLimit = 3;
+var resultsLimit = 5;
 
 module.exports = {
   search: function(req, res){
@@ -22,7 +23,7 @@ module.exports = {
     */
     req.query.sort = '0';
 
-    if(req.query.location === undefined){
+    if(req.params.event_id !== undefined){
       var event_id = req.params.event_id;
       Event.findOne({event_id: event_id})
       .then(function (event, err){
@@ -30,13 +31,20 @@ module.exports = {
           console.log('DB : ' + err)
           res.status(500).send(err);
         }
-        if(event !== undefined){
-          req.query.location = event.location || 'The North Pole'
-          } else{
-          req.query.location = '90210'
+
+        if(event.location !== undefined){
+          req.query.location = event.location;
+        } else {
+          req.query.location = '90210';
         }
 
-        req.query.limit = req.query.limit || 5;
+        if(event.radius !== undefined){
+          req.query.radius_filter = event.radius * 1600;
+        } else {
+          req.query.radius_filter = 5000;
+        }
+
+        req.query.limit = req.query.limit || resultsLimit;
 
         yelp.search(req.query)
         .then(function(data){
@@ -45,7 +53,7 @@ module.exports = {
             yelp.business(business.id)
             .then(function(result){
               businesses.push(result);
-              if(businesses.length === parseInt(req.query.limit)){
+              if(businesses.length === parseInt(req.query.limit) || businesses.length === data.businesses.length){
                 res.json(businesses);
               }
             })
@@ -62,7 +70,11 @@ module.exports = {
       });
     } else {
 
-      req.query.limit = req.query.limit || 5;
+      //Initially used for ease of testing
+
+      req.query.limit = req.query.limit || resultsLimit;
+      req.query.location = req.query.location || '90210';
+
 
       yelp.search(req.query)
       .then(function(data){
@@ -86,22 +98,6 @@ module.exports = {
         });
       });
     }
-
-    //If location radius becomes a required event input
-
-    /*if(req.query.radius_filter === undefined){
-        Event.findOne({event_id: req.params.event_id})
-        .then(function(err, event){
-          if(err){
-            res.send(500, err);
-          }
-          if(event.radius_filter){
-            req.query.radius_filter = event.radius_filter;
-          } else {
-            req.query.radius_filter = 5000;
-          }
-        });
-      }*/
   },
 
   storeBusiness: function(req, res){
