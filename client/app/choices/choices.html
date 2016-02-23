@@ -1,62 +1,71 @@
-<div>
-Your Event is: {{eventName}}
-Your Location is: {{location}}
-</div>
-
-<h3 class="md-headline">Your Preferences</h1>
-
-<form ng-submit="sendPreference()">
-  <md-input-container class="md-block" flex-gt-sm>
-    <label>Search</label>
-    <input type="text" ng-model="preference.term" name="term">
-    <md-button class="md-raised md-primary" type="submit">Submit</md-button>
-  </md-input-container>
-</form>
-<div class="searchresults md-padding" layout="row" layout-wrap>
-  <md-card ng-hide='result.hide' ng-repeat="result in searchresults" style="width: 300px">
-    <img ng-src={{result.image_url}} class="md-card-image" alt="image caption">
-    <md-card-title>
-      <md-card-title-text>
-        <span class="md-headline">{{result.name}}</span>
-      </md-card-title-text>
-    </md-card-title>
-    <md-card-actions layout="row" layout-align="start center">
-      <md-button ng-click='result.hide = storeChoice(result)'>Save</md-button>
-      <md-button ng-click='result.hide = true'>Dismiss</md-button>
-      <md-card-icon-actions>
-        <md-button class="md-icon-button" aria-label="icon">
-          <md-icon md-svg-icon="icon"></md-icon>
-        </md-button>
-      </md-card-icon-actions>
-    </md-card-actions>
-    <md-card-content>
-      <p>{{result.snippet_text}}</p>
-    </md-card-content>
-  </md-card>
-
-</div>
-<div class="choices">
-<h3 class="md-headline">Saved Choices</h2>
-<div class="savedchoices md-padding" layout="row" layout-wrap>
-  <md-card ng-repeat="choice in choices" style="width: 300px">
-    <!-- <md-card-header>
-      <md-card-header-text>
-        <span class="md-title">Title</span>
-        <span class="md-subhead">Sub header</span>
-      </md-card-header-text>
-    </md-card-header> -->
-    <img ng-src={{choice.image_url}} class="md-card-image" alt="image caption">
-    <md-card-title>
-      <md-card-title-text>
-        <span class="md-headline">{{choice.name}}</span>
-        <span class="md-subhead">{{choice.snippet_text}}</span>
-      </md-card-title-text>
-    </md-card-title>
-    <md-card-content>
-      <p>ID: {{choice.business_id}}</p>
-    </md-card-content>
-  </md-card>
+<md-toolbar class="md-medium-tall">
+  <div id="eventdetails" layout="row" layout-padding>
+    <h1 class="md-display-1">{{eventName}} |</h1>
+    <h1 class="md-display-1">{{location}}</h1>
+  </div>
+</md-toolbar>
+<div layout="column" layout-margin layout-padding>
+  <div id="search">
+    <div class="searchcontrols">
+      <h2 class="md-headline">Search</h2>
+      <form layout="row" ng-submit="sendPreference()">
+        <md-input-container>
+          <label>Search</label>
+          <input class="md-primary" type="text" ng-model="preference.term" name="term">
+        </md-input-container>
+        <md-input-container>
+          <md-button class="md-raised md-primary" type="submit">Submit</md-button>
+        </md-input-container>
+      </form>
+    </div>
+    <div class="searchresults" layout="row">
+      <md-card ng-hide='result.hide' ng-repeat="result in searchresults" style="width: 300px">
+        <img ng-src={{result.image_url}} alt="image caption">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-subhead resultname">{{result.name}}</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content layout="column">
+            <div layout="column">
+              <a ng-href={{result.url}}><img ng-src={{result.rating_img_url}} /></a>
+              <span flex></span>
+              <a ng-href={{result.url}}><img src="assets/yelp-logo-xsmall.png" /></a>
+            </div>
+        </md-card-content>
+        <md-card-actions layout-fill>
+          <md-card-icon-actions layout="row" layout-align="end end">
+            <md-button class="md-icon-button" aria-label="Save" ng-click="result.hide = storeChoice(result)">
+              <md-icon md-font-icon="material-icons">favorite</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="Dismiss" ng-click="result.hide = true">
+              <md-icon md-font-icon="material-icons">clear</md-icon>
+            </md-button>
+          </md-card-icon-actions>
+        </md-card-actions>
+      </md-card>
+    </div>
+  <div id="choices">
+    <h3 class="md-headline">Saved Choices</h2>
+    <div class="savedchoices md-padding" layout="row" layout-wrap>
+      <md-card ng-repeat="choice in choices" style="width: 300px">
+        <!-- <md-card-header>
+          <md-card-header-text>
+            <span class="md-title">Title</span>
+            <span class="md-subhead">Sub header</span>
+          </md-card-header-text>
+        </md-card-header> -->
+        <img ng-src={{choice.image_url}} class="md-card-image" alt="image caption">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{choice.name}}</span>
+            <span class="md-subhead">{{choice.snippet_text}}</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <p>ID: {{choice.business_id}}</p>
+        </md-card-content>
+      </md-card>
+    </div>
   </div>
 </div>
-
-
