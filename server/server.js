@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
 var app = express();
-var port = process.env.MONGOLAB_URI || 8000;
+var port = process.env.PORT || 8000;
 var uri = 'mongodb://testing:testing@ds013918.mongolab.com:13918/heroku_p92qhfjt' || 'mongodb://localhost/brachiosaurus';
 mongoose.connect(uri);
 
