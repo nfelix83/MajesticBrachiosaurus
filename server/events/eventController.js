@@ -8,6 +8,11 @@ module.exports = {
     var location = req.body.location;
     var radius = req.body.radius;
     var event_id = randomWords({exactly: 2}).join(""); //generate two random word to make it as event_id
+    var usersObject = {};
+    usersObject[req.ip.split('.').join('-')] = {
+      votesCast: 0,
+      choicesMade: 0
+    };
 
     Event.findOne({event_id: event_id}, function(err, event) { //check to see if event id exists
       if(err) {
@@ -19,7 +24,8 @@ module.exports = {
           event_id: event_id,
           event_name: event_name,
           location: location,
-          radius: radius
+          radius: radius,
+          users: usersObject
         }, function(err, event) {
           if(err) {
             return console.error(err);
@@ -40,6 +46,12 @@ module.exports = {
         return console.error('err', err);
       }
       if(event) {
+        if (event.users[req.ip.split('.').join('-')] === undefined) {
+          event.users[req.ip.split('.').join('-')] = {
+            votesCast: 0,
+            choicesMade: 0
+          };
+        }
         console.log('get event id', event.event_id);
         res.redirect('/#/' + event.event_id);
       }

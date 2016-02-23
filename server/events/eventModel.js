@@ -8,8 +8,8 @@ var EventSchema = new Schema({
   radius: Number,
   choices: {
     businesses: Array
-  }
-  
+  },
+  users: Object
 });
 
 module.exports = mongoose.model('Event', EventSchema);

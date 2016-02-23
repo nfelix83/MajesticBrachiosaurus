@@ -12,12 +12,13 @@ var yelp = new Yelp({
 
 module.exports = {
   search: function(req, res){
-    req.query.sort = '0';
     /*
+    Query sort:
     0 - Default , weight given to matching search terms
     1 - Weight added to location
     2 - Weight added to rating/# of ratings
     */
+    req.query.sort = '0';
 
     if(req.query.location === undefined){
       var event_id = req.params.event_id;
