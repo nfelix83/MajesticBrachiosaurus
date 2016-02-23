@@ -2,3 +2,24 @@
   width: 300px;
 }*/
 
+
+md-input-container {
+  width: 400px;
+}
+
+.event-radius {
+  width: 100px;
+}
+
+md-input-container:not(.md-input-invalid) {
+  color: green; 
+}
+
+md-input-container:not(.md-input-invalid) {
+  color: dodgerblue; 
+}
+
+md-input-container.md-input-invalid ,
+md-input-container.md-input-invalid {
+  color: red; 
+}

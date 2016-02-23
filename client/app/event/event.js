@@ -2,23 +2,17 @@ angular.module('clever.event', [])
 
 .controller('EventController',['$scope','Events','$location', function($scope,Events,$location){
   $scope.event = {};
-  
+  $scope.radius = [1, 5, 10, 15, 20, 25];
   
   $scope.sendNewEvent = function(){
-    //Events.setLocation($scope.event.location);
-    
-    
-
     Events.sendNewEvent($scope.event)
     .then(function(data){
-      //console.log('data', data);
       $location.path('/' + data.event_id);
     });
   };
 }])
 
 .factory('Events', function($http){
-  var savedData={}
   var sendNewEvent = function(event){
     return $http({
       method: 'POST',
@@ -30,13 +24,10 @@ angular.module('clever.event', [])
     });
   };
   
-  
-
   return {
     sendNewEvent : sendNewEvent
-    
   };
   
-})
+});
 
 

@@ -5,6 +5,7 @@ var EventSchema = new Schema({
   event_id: String,
   event_name: String,
   location: String,
+  radius: Number,
   choices: {
     businesses: Array
   }
