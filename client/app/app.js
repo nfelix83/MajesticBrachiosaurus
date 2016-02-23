@@ -24,4 +24,10 @@ angular.module('clever', [
     });
 
   $locationProvider.html5Mode(true);
+})
+
+.filter('substr', function() {
+  return function(str, start, end) {
+    return str.substr(start, end);
+  };
 });

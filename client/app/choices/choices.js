@@ -20,10 +20,13 @@ angular.module('clever.choices', [])
     Preference.sendPreference($scope.preference)
     .then(function (res,err) {
       $scope.searchresults = [];
+      // Build array of search results from Yelp
       for (var i = 0; i < res.data.length; i++) {
         if (res.data[i].image_url === undefined) {
           res.data[i].image_url = Preference.getDefaultImage();
         }
+        // Change image url for higher res image
+        res.data[i].image_url = res.data[i].image_url.substr(0, res.data[i].image_url.length - 6) + "ls.jpg";
         $scope.searchresults.push(res.data[i]);
       }
     });
@@ -55,7 +58,7 @@ angular.module('clever.choices', [])
       $mdToast.showSimple('Already saved');
     }
     return true;
-  }
+  };
 
   $scope.getEventDetails();
   $scope.getChoices();

@@ -12,14 +12,18 @@ md-input-container {
 }
 
 md-input-container:not(.md-input-invalid) {
-  color: green; 
+  color: green;
 }
 
 md-input-container:not(.md-input-invalid) {
-  color: dodgerblue; 
+  color: dodgerblue;
 }
 
 md-input-container.md-input-invalid ,
 md-input-container.md-input-invalid {
-  color: red; 
+  color: red;
+}
+
+.resultname {
+  font-weight: bold;
 }
