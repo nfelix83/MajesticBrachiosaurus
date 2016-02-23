@@ -1,6 +1,6 @@
 angular.module('clever.choices', [])
 
-.controller('PreferenceController', function($scope, Preference,$routeParams){
+.controller('PreferenceController', function($scope, Preference, $routeParams, $mdToast){
   //TODO send and receive preferences on same page how to receive and send/receive
   $scope.preference = {
     'term': ''
@@ -17,8 +17,16 @@ angular.module('clever.choices', [])
   };
 
   $scope.sendPreference= function () {
-    $scope.searchresults = [];
-    Preference.sendPreference($scope.preference, $scope.searchresults);
+    Preference.sendPreference($scope.preference)
+    .then(function (res,err) {
+      $scope.searchresults = [];
+      for (var i = 0; i < res.data.length; i++) {
+        if (res.data[i].image_url === undefined) {
+          res.data[i].image_url = defaultImagePath;
+        }
+        $scope.searchresults.push(res.data[i]);
+      }
+    });
   };
 
   $scope.getChoices = function () {
@@ -32,8 +40,13 @@ angular.module('clever.choices', [])
   };
 
   $scope.storeChoice = function (choice) {
-    Preference.storeChoice(choice.id);
-    $scope.choices.push(choice);
+    if (Preference.notInChoices(choice, $scope.choices)) {
+      Preference.storeChoice(choice.id);
+      $scope.choices.push(choice);
+      $mdToast.showSimple('Saved');
+    } else {
+      $mdToast.showSimple('Already saved');
+    }
     return true;
   }
 
@@ -45,18 +58,11 @@ angular.module('clever.choices', [])
   //send request to yelp api
   var defaultImagePath = '../../assets/default_business.jpg';
 
-  var sendPreference = function (term, resultsArray) {
+  var sendPreference = function (term) {
     return $http({
       method: 'Get',
       url:'/' + $routeParams.event_id + '/search',
       params: term
-    }).then(function (res,err) {
-      for (var i = 0; i < res.data.length; i++) {
-        if (res.data[i].image_url === undefined) {
-          res.data[i].image_url = defaultImagePath;
-        }
-        resultsArray.push(res.data[i]);
-      }
     });
   };
 
@@ -65,7 +71,7 @@ angular.module('clever.choices', [])
     return $http({
       method: 'Get',
       url:'/' + $routeParams.event_id + '/saved',
-    })
+    });
   };
 
   var storeChoice = function (business_id) {
@@ -96,10 +102,20 @@ angular.module('clever.choices', [])
     });
   };
 
+  var notInChoices = function (newChoice, choices) {
+    for (var i = 0; i < choices.length; i++) {
+      if (choices[i].id === newChoice.id) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   return {
     sendPreference:sendPreference,
     getChoices:getChoices,
     storeChoice:storeChoice,
-    getEventDetails:getEventDetails
+    getEventDetails:getEventDetails,
+    notInChoices: notInChoices
   };
 });
