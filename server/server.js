@@ -4,8 +4,8 @@ var bodyParser = require('body-parser');
 
 var app = express();
 var port = process.env.PORT || 8000;
-
-mongoose.connect('mongodb://testing:testing@ds013918.mongolab.com:13918/heroku_p92qhfjt' || 'mongodb://localhost/brachiosaurus');
+var uri = 'mongodb://testing:testing@ds013918.mongolab.com:13918/heroku_p92qhfjt' || 'mongodb://localhost/brachiosaurus';
+mongoose.connect(uri);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
