@@ -128,7 +128,7 @@ module.exports = {
         event.save();
         res.status(201).send();
       } else {
-        res.status(401).send();
+        res.status(418).send();
       }
     });
   },

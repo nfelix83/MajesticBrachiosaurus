@@ -46,7 +46,7 @@ angular.module('clever.choices', [])
         $scope.choices.push(choice);
         $mdToast.showSimple('Saved');
         }, function error (response) {
-          if (response.status === 401) {
+          if (response.status === 418) {
             $mdToast.showSimple('Limit reached');
           }
       });
