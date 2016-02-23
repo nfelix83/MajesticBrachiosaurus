@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var port = process.env.PORT || 8000;
 
-mongoose.connect('mongodb://localhost/brachiosaurus');
+mongoose.connect('mongodb://testing:testing@ds013918.mongolab.com:13918/heroku_p92qhfjt' || 'mongodb://localhost/brachiosaurus');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
