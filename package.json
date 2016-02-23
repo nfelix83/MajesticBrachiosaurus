@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server/server.js",
-    "postinstall": "grunt build"
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "engines": {
     "node": "4.3.0",
@@ -22,6 +22,7 @@
     "url": "https://github.com/jyoon006/MajesticBrachiosaurus/issues"
   },
   "dependencies": {
+    "bower": "^1.7.2",
     "bluebird": "^3.3.1",
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
