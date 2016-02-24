@@ -119,7 +119,7 @@ module.exports = {
         res.status(500).send('Please reload event page');
       }
       if (event.users[userIndex].choicesMade < choicesLimit) {
-        event.choices.businesses.push({business_id: req.body.id, votes: 0});
+        event.choices.businesses.push({business_id: req.body.id});
         event.users[userIndex].set({choicesMade: event.users[userIndex].choicesMade + 1});
         event.save();
         res.status(201).send();

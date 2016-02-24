@@ -101,24 +101,22 @@ module.exports = {
   },
   updateVotes: function(req, res) {
     var event_id = req.params.event_id;
-    var store_id = req.body.id;
     var index = req.body.index;
-    console.log('event id', event_id);
-    console.log('index', index);
-    console.log('store id', store_id);
-
+    
     Event.findOne({event_id: event_id}, function(err, event) {
       if(event) {
-        var data = {$set: {"event.choices.businesses[index].votes" : event.choices.businesses[index].votes++}};
-        var options = {upsert: true};
-          console.log('event', event);
-          Event.update({event_id: event_id}, data, options, function(err, result) {
-          console.log('result', result);
+        console.log(event.choices.businesses[index]);
+        event.choices.businesses[index].votes = event.choices.businesses[index].votes + 1;
+        event.save(function(err) {
+          if(err) {
+            return console.error(err);
+          }
           console.log('event', event.choices.businesses[index]);
+          res.json(event);
         });
       }
       
     });
-    
   }
+  
 };

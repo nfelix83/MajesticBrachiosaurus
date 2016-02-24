@@ -10,7 +10,13 @@ var EventSchema = new Schema({
     default: 1
   },
   choices: {
-    businesses: Array
+    businesses: [{
+      business_id: String,
+      votes: {
+        type: Number,
+        default: 0
+      }
+    }]
   },
   users: [{
     ip: String,
