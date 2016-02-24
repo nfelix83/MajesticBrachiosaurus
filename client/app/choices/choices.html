@@ -58,7 +58,8 @@
     <div id="choices">
     <h2 class="md-headline">Saved Choices</h2>
     <div class="saveddisplay" layout="row" layout-wrap>
-      <md-card ng-repeat="choice in choices" class="savedcard">
+      <!-- Display saved cards, sorting by descending votes -->
+      <md-card ng-repeat="choice in choices | orderBy:'votes':true" class="savedcard">
         <img ng-src={{choice.image_url}} class="md-card-image" alt="image caption">
         <md-card-title>
           <md-card-title-text>

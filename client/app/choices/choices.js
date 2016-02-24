@@ -53,10 +53,6 @@ angular.module('clever.choices', [])
         res.data[i].image_url = res.data[i].image_url.substr(0, res.data[i].image_url.length - 6) + "ls.jpg";
         $scope.choices.push(res.data[i]);
       }
-      // Sort saved choices by number of votes
-      $scope.choices.sort(function (a,b) {
-        return b.votes - a.votes;
-      });
     });
   };
 
