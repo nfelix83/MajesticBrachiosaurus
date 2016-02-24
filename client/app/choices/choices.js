@@ -76,14 +76,9 @@ angular.module('clever.choices', [])
   $scope.updateVotes = function(choice) {
     Preference.updateVotes(choice)
     .then(function(resp) {
-      console.log('resp', resp);
       resp.data.event.users.forEach(function(user) {
-        console.log('user', user);
         if(resp.data.business.ips.indexOf(user.ip) !== -1) {
-
           choice.voted = true;
-          console.log(choice);
-          // $scope.voted = true;
         }
       });
 
@@ -97,6 +92,7 @@ angular.module('clever.choices', [])
   };
 
   // Populate rvent details and saved choices on load
+
   $scope.getEventDetails();
   $scope.getChoices();
 })
@@ -148,7 +144,6 @@ angular.module('clever.choices', [])
       data: $routeParams
     })
     .then(function (res) {
-      console.log(res.data);
       cb(res.data);
     });
   };
