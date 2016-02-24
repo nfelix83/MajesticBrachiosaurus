@@ -54,11 +54,35 @@
             <span class="md-title">Title</span>
             <span class="md-subhead">Sub header</span>
           </md-card-header-text>
-        </md-card-header> -->
-        <img ng-src={{choice.image_url}} class="md-card-image" alt="image caption">
+        </md-card-header> 
+        <img ng-src={{choice.image_url}} class="md-card-image" alt="image caption">-->
         <md-card-title>
           <md-card-title-text>
             <span class="md-headline">{{choice.name}}</span>
+
+        
+        <img ng-src={{choice.image_url}} alt="image caption">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-title">{{choice.name}}</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content layout="column">
+            <div layout="column">
+              <a ng-href={{choice.url}}><img ng-src={{choice.rating_img_url}} /></a>
+              <a ng-href={{choice.url}}><img src="assets/yelp-logo-xsmall.png" /></a>
+            </div>
+        </md-card-content>
+        <md-card-actions layout-fill>
+          <md-card-icon-actions layout="row" layout-align="end end">
+            
+            <md-button class="md-icon-button" aria-label="Dismiss" ng-click="removeChoice(choice)">
+              <md-icon md-font-icon="material-icons">clear</md-icon>
+            </md-button>
+          </md-card-icon-actions>
+        </md-card-actions>
+      </md-card>
+    </div>
             <span class="md-subhead">{{choice.snippet_text}}</span>
           </md-card-title-text>
         </md-card-title>

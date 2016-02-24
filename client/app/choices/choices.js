@@ -36,6 +36,16 @@ angular.module('clever.choices', [])
     });
   };
 
+  $scope.removeChoice = function(choice) {
+    
+    $scope.choiceToRemove = $scope.choices.indexOf(choice);
+    
+    $scope.choices.splice($scope.choiceToRemove,1)
+    //Preference.removeChoice(choice.id);
+
+
+  }
+
 
 
   $scope.getChoices = function () {
@@ -148,7 +158,7 @@ angular.module('clever.choices', [])
     getChoices:getChoices,
     storeChoice:storeChoice,
     getEventDetails:getEventDetails,
-
+    removeChoice: removeChoice,
 
     notInChoices: notInChoices,
     getDefaultImage: getDefaultImage
