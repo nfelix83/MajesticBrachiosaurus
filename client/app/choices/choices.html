@@ -78,7 +78,7 @@
           <md-card-icon-actions layout="row" layout-align="end end">
             <span class="md-subhead md-padding" layout-align="end">{{choice.votes}} Votes</span>
             <span flex></span>
-            <md-button class="md-icon-button" aria-label="Upvote" ng-click="updateVotes(choice)" ng-disabled="voted">
+            <md-button class="md-icon-button" aria-label="Upvote" ng-disabled='choice.voted' ng-click="updateVotes(choice)" >
               <md-icon class="material-icons thumb-up">thumb_up</md-icon>
             </md-button>
             <md-button class="md-icon-button" aria-label="Dismiss" ng-click="removeChoice(choice)">
