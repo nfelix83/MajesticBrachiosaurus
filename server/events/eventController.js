@@ -31,6 +31,7 @@ module.exports = {
           if(err) {
             return console.error(err);
           }
+          
           res.json(event);  //send newly created event object to client
         });
       } else { //if randomly generated event_id already exist within db on create event call
@@ -47,6 +48,7 @@ module.exports = {
         return console.error('err', err);
       }
       if(event) {
+
         var formattedIP = req.ip.split('.').join('-');
         var existingUser = false;
         for (var i = 0; i < event.users.length; i++) {
@@ -62,6 +64,7 @@ module.exports = {
             choicesMade: 0
           });
         }
+
         console.log('get event id', event.event_id);
         res.redirect('/#/' + event.event_id);
       }
