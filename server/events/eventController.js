@@ -118,13 +118,19 @@ module.exports = {
         event.choices.businesses.forEach(function(business) {
           if(business.business_id === business_id) {
             business.votes = business.votes + 1;
-            event.save(function(err) {
-              if(err) {
-                return console.error(err);
-              }
-              console.log('event', event.choices.businesses);
-              res.json(business);
-            });
+            // if(business.ips.indexOf(ip) !== - 1) {
+            //   res.json({voted: true});
+            // }
+            // else {
+              business.ips.push(ip);
+              event.save(function(err) {
+                if(err) {
+                  return console.error(err);
+                }
+                console.log('event', event.choices.businesses);
+                res.json({event: event, business: business});
+              });
+            // }
           }
         }); 
       }

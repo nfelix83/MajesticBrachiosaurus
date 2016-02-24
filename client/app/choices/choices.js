@@ -7,7 +7,7 @@ angular.module('clever.choices', [])
 
   $scope.searchresults = [];
   $scope.choices = [];
-  $scope.voted = false;
+  // $scope.voted = false;
 
   $scope.getEventDetails = function () {
     Preference.getEventDetails(function (data) {
@@ -76,9 +76,20 @@ angular.module('clever.choices', [])
   $scope.updateVotes = function(choice) {
     Preference.updateVotes(choice)
     .then(function(resp) {
+      console.log('resp', resp);
+      resp.data.event.users.forEach(function(user) {
+        console.log('user', user);
+        if(resp.data.business.ips.indexOf(user.ip) !== -1) {
+
+          choice.voted = true;
+          console.log(choice);
+          // $scope.voted = true;
+        }
+      });
+
       $scope.choices.forEach(function(choice) {
-        if(choice.id === resp.data.business_id) {
-          choice.votes = resp.data.votes;
+        if(choice.id === resp.data.business.business_id) {
+          choice.votes = resp.data.business.votes;
         }
       });
 
