@@ -14,10 +14,11 @@ angular.module('clever.choices', [])
 
   $scope.getEventDetails = function () {
     Preference.getEventDetails(function (data) {
-
+      var time = data.time.split(":");
       $scope.eventName = data.event_name;
       $scope.location = data.location;
       $scope.date = data.date;
+      $scope.time = time[0] + ':' + time[1] + " " + time[2].substr(-2);
     });
 
   };
@@ -142,17 +143,13 @@ angular.module('clever.choices', [])
   };
 
   var getEventDetails = function (cb) {
-
-
     $http({
       method: 'POST',
       url: '/' + $routeParams.event_id + '/details',
       data: $routeParams  
     })
-
     .then(function (res) {
       console.log(res.data);
-
       cb(res.data);
     });
   };

@@ -11,10 +11,10 @@ angular.module('clever.event', [])
       $scope.newDate.getDate()
       );
 
+
   $scope.sendNewEvent = function(){
-    
+    $scope.event.time = $scope.event.time.toLocaleTimeString();
     $scope.event.date = $scope.event.date.toDateString();
-    console.log($scope.event);
     Events.sendNewEvent($scope.event)
     .then(function(data){
       $location.path('/' + data.event_id);

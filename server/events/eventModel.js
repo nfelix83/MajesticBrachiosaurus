@@ -6,6 +6,7 @@ var EventSchema = new Schema({
   event_name: String,
   location: String,
   date: String,
+  time: String,
   radius: {
     type: Number,
     default: 1

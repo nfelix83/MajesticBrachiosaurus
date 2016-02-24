@@ -7,7 +7,7 @@ module.exports = {
     var location = req.body.location;
     var radius = req.body.radius;
     var date = req.body.date;
-    console.log(date);
+    var time = req.body.time;
     var event_id = randomWords({exactly: 2}).join(""); //generate two random word to make it as event_id
     var usersArray = [];
     usersArray.push({
@@ -27,6 +27,7 @@ module.exports = {
           event_name: event_name,
           location: location,
           date: date,
+          time: time,
           radius: radius,
           users: usersArray
         }, function(err, event) {
@@ -114,11 +115,11 @@ module.exports = {
       }
 
       if(event) {
-        if(listOfIps.indexOf(ip) !== -1) {
-          console.log('ip exists');
-          res.json({voted: true});
-        }
-        else {
+        // if(listOfIps.indexOf(ip) !== -1) {
+        //   console.log('ip exists');
+        //   res.json({voted: true});
+        // }
+        // else {
           console.log(event.users);
           event.choices.businesses[index].votes = event.choices.businesses[index].votes + 1;
           event.choices.businesses[index].ips.push(ip);
@@ -127,7 +128,7 @@ module.exports = {
             console.log('event', event.choices.businesses[index]);
             res.json({voted: true});
           });
-        }
+        // }
           
        
       }
