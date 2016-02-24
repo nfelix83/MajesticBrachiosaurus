@@ -88,6 +88,7 @@
         </md-card-title>
         <md-card-content>
           <p>ID: {{choice.business_id}}</p>
+          <span>{{choice.votes}}</span><i class="material-icons thumb-up" ng-click="updateVotes($index)" ng-disabled="voted">thumb_up</i>
         </md-card-content>
       </md-card>
     </div>

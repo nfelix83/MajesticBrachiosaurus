@@ -5,9 +5,19 @@ var EventSchema = new Schema({
   event_id: String,
   event_name: String,
   location: String,
-  radius: Number,
+  radius: {
+    type: Number,
+    default: 1
+  },
   choices: {
-    businesses: Array
+    businesses: [{
+      business_id: String,
+      votes: {
+        type: Number,
+        default: 0
+      },
+      ips: Array
+    }]
   },
   users: [{
     ip: String,

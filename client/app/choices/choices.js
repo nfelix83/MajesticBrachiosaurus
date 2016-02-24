@@ -10,6 +10,7 @@ angular.module('clever.choices', [])
 
   $scope.searchresults = [];
   $scope.choices = [];
+  $scope.voted = false;
 
   $scope.getEventDetails = function () {
     Preference.getEventDetails(function (data) {
@@ -80,6 +81,21 @@ angular.module('clever.choices', [])
   };
 
 
+  $scope.updateVotes = function(index) {
+    var storeId = $scope.choices[index].id;
+    var storeIndex = index;
+    // var votes = $scope.choices[index].votes;
+    Preference.updateVotes(storeId, storeIndex)
+    .then(function(resp) {
+      if(resp.data.voted) {
+        $scope.voted = true;
+      }
+      console.log('votes', resp.data);
+    });
+  };
+
+
+
   $scope.getEventDetails();
   $scope.getChoices();
 })
@@ -104,7 +120,7 @@ angular.module('clever.choices', [])
     });
   };
 
-  var storeChoice = function (business_id) {
+  var storeChoice = function (business_id, index) {
     return $http({
       method: 'Post',
       url: '/' + $routeParams.event_id + '/store',
@@ -140,6 +156,17 @@ angular.module('clever.choices', [])
     });
   };
 
+  var updateVotes = function(id, index) {
+    return $http({
+      method: 'POST',
+      url: '/' + $routeParams.event_id + '/votes',
+      data: {
+        id: id,
+        index: index
+      }
+    });
+  };
+
   var notInChoices = function (newChoice, choices) {
     for (var i = 0; i < choices.length; i++) {
       if (choices[i].id === newChoice.id) {
@@ -159,10 +186,8 @@ angular.module('clever.choices', [])
     storeChoice:storeChoice,
     getEventDetails:getEventDetails,
     removeChoice: removeChoice,
-
     notInChoices: notInChoices,
-    getDefaultImage: getDefaultImage
-
-
+    getDefaultImage: getDefaultImage,
+    updateVotes: updateVotes
   };
 });
