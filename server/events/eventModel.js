@@ -15,7 +15,8 @@ var EventSchema = new Schema({
       votes: {
         type: Number,
         default: 0
-      }
+      },
+      ips: Array
     }]
   },
   users: [{

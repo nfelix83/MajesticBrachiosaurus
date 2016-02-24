@@ -31,3 +31,6 @@ md-input-container.md-input-invalid {
   color: dodgerblue;
 }
 
+.thumb-up[disabled] {
+  color: dodgerblue;
+}
