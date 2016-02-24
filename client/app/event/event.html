@@ -22,7 +22,9 @@
           <label>Location</label>
           <input type="text" name="event-location "ng-model="event.location" ng-required="true">
         </md-input-container>
-
+        
+        <md-datepicker name="event-date" ng-model="event.date" md-placeholder="Enter date" ng-required="true" md-min-date="minDate"></md-datepicker>
+        
         <md-input-container class="event-radius">
           <label>Radius</label>
             <md-select ng-model="event.radius">
