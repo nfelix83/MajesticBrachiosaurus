@@ -1,8 +1,12 @@
 /*.md-card {
   width: 300px;
 }*/
-
-
+.main {
+	
+}
+.chat {
+	border: 5px solid black;
+}
 md-input-container {
   width: 400px;
 }
