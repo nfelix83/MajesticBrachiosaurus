@@ -107,32 +107,27 @@ module.exports = {
     var event_id = req.params.event_id;
     var index = req.body.index;
     var ip = req.ip.split('.').join('-');
-    console.log('ip', ip);
+    var business_id = req.body.id;
     Event.findOne({event_id: event_id}, function(err, event) {
-      var listOfIps = event.choices.businesses[index].ips;
+      // var listOfIps = event.choices.businesses[index].ips;
       if(err) {
         return console.error(err);
       }
 
       if(event) {
-        // if(listOfIps.indexOf(ip) !== -1) {
-        //   console.log('ip exists');
-        //   res.json({voted: true});
-        // }
-        // else {
-          console.log(event.users);
-          event.choices.businesses[index].votes = event.choices.businesses[index].votes + 1;
-          event.choices.businesses[index].ips.push(ip);
-          event.save(function(err) {
-            
-            console.log('event', event.choices.businesses[index]);
-            res.json({voted: true});
-          });
-        // }
-          
-       
+        event.choices.businesses.forEach(function(business) {
+          if(business.business_id === business_id) {
+            business.votes = business.votes + 1;
+            event.save(function(err) {
+              if(err) {
+                return console.error(err);
+              }
+              console.log('event', event.choices.businesses);
+              res.json(business);
+            });
+          }
+        }); 
       }
-      
     });
   }
 

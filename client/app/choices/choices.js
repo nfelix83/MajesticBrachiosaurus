@@ -56,7 +56,7 @@ angular.module('clever.choices', [])
     .then(function (res, err) {
       $scope.choices = [];
       for (var i = 0; i < res.data.length; i++) {
-        console.log(res.data[i]);
+        // console.log(res.data[i]);
         $scope.choices.push(res.data[i]);
       }
     });
@@ -83,16 +83,15 @@ angular.module('clever.choices', [])
   };
 
 
-  $scope.updateVotes = function(index) {
-    var storeId = $scope.choices[index].id;
-    var storeIndex = index;
-    // var votes = $scope.choices[index].votes;
-    Preference.updateVotes(storeId, storeIndex)
+  $scope.updateVotes = function(choice) {
+    Preference.updateVotes(choice)
     .then(function(resp) {
-      if(resp.data.voted) {
-        $scope.voted = true;
-      }
-      console.log('votes', resp.data);
+      $scope.choices.forEach(function(choice) {
+        if(choice.id === resp.data.business_id) {
+          choice.votes = resp.data.votes;
+        }
+      });
+      
     });
   };
 
@@ -154,14 +153,11 @@ angular.module('clever.choices', [])
     });
   };
 
-  var updateVotes = function(id, index) {
+  var updateVotes = function(choice) {
     return $http({
       method: 'POST',
       url: '/' + $routeParams.event_id + '/votes',
-      data: {
-        id: id,
-        index: index
-      }
+      data: choice
     });
   };
 
