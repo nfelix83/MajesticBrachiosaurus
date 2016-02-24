@@ -1,9 +1,15 @@
-<md-toolbar class="md-medium-tall">
-  <div id="eventdetails" layout="row" layout-padding>
-    <h1 class="md-display-1">{{eventName}} |</h1>
-    <h1 class="md-display-1">{{location}} |</h1>
-    <h1 class="md-display-1">{{date}} |</h1>
-    <h1 class="md-display-1">{{time}} </h1>
+<md-toolbar>
+  <div id="eventdetails" class="md-padding" layout="column">
+    <div layout="row">
+      <span class="md-display-1">{{eventName}} | {{location}} </span>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-labe="Email Link" ng-href="mailto:?subject=Help plan {{eventName}}!&body=Someone has asked you to help plan {{eventName}}. Visit HEROKU_BASE_URL/{{eventId}} to get started!">
+        <md-icon md-font-icon="material-icons">email</md-icon>
+      </md-button>
+    </div>
+    <div>
+      <span class="md-subhead">{{date}} | {{time}}</span>
+    </div>
   </div>
 </md-toolbar>
 <div layout="row" layout-margin layout-padding class="main">

@@ -15,6 +15,7 @@ angular.module('clever.choices', [])
   $scope.getEventDetails = function () {
     Preference.getEventDetails(function (data) {
       var time = data.time.split(":");
+      $scope.eventId = data.event_id;
       $scope.eventName = data.event_name;
       $scope.location = data.location;
       $scope.date = data.date;
@@ -40,9 +41,9 @@ angular.module('clever.choices', [])
   };
 
   $scope.removeChoice = function(choice) {
-    
+
     $scope.choiceToRemove = $scope.choices.indexOf(choice);
-    
+
     $scope.choices.splice($scope.choiceToRemove,1)
     Preference.removeChoice(choice.id);
   };
@@ -143,7 +144,7 @@ angular.module('clever.choices', [])
     $http({
       method: 'POST',
       url: '/' + $routeParams.event_id + '/details',
-      data: $routeParams  
+      data: $routeParams
     })
     .then(function (res) {
       console.log(res.data);
