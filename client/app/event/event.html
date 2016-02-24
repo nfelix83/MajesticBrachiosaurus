@@ -1,46 +1,48 @@
-
-<!-- <div layout="column" flex layout-padding layout-margin>
-  <div class="newEvent">
-    <form ng-submit="sendNewEvent()">
-      <input type="text" ng-model="event.event_name" name="text" placeholder="event name" />
-      <input type="text" ng-model="event.location" name="location" placeholder="event location" />
-      <input type="submit" id="submit" value="Create" />
-    </form> 
+<md-toolbar>
+  <div>
+    <span class="md-display-1">I Wish Our App Had A Name</span>
   </div>
-</div>  -->
-
-
-
-  <div layout-gt-sm="row" flex layout-padding layout-margin>
-    <form class="new-event" name="new-event" ng-submit="sendNewEvent()">
-      <div class="new-event-details">
-        <md-input-container class="md-block" flex-gt-sm>
+</md-toolbar>
+<div class="main" layout-margin layout="row" layout-align="center center">
+  <form flex="65" class="new-event" layout="column" name="new-event" ng-submit="sendNewEvent()">
+    <div class="new-event-details">
+      <div>
+        <h2 class="md-title">Name your event and tell us where it's located:</h2>
+        <md-input-container>
           <label>Event Name</label>
           <input type="text" name="event-name "ng-model="event.event_name" ng-required="true">
         </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
+        <md-input-container>
           <label>Location</label>
           <input type="text" name="event-location "ng-model="event.location" ng-required="true">
         </md-input-container>
-        
-        <md-datepicker name="event-date" ng-model="event.date" md-placeholder="Enter date" ng-required="true" md-min-date="minDate"></md-datepicker>
-        <md-input-container class="md-block" flex-gt-sm>
-          <input type="time" name="event-time "ng-model="event.time" ng-required="true" placeholder="Event time">
-        </md-input-container>
-
+      </div>
+      <div>
+        <h2 class="md-title">Tell us how large an area to search:</h2>
         <md-input-container class="event-radius">
-          <label>Radius</label>
-            <md-select ng-model="event.radius">
-              <md-option ng-repeat="value in radius" value="{{value}}">
-                {{value}} mi
-              </md-option>
-            </md-select>
+          <label>Search Radius</label>
+          <md-select ng-model="event.radius">
+            <md-option ng-repeat="value in radius" value="{{value}}">
+              {{value}} mi
+            </md-option>
+          </md-select>
         </md-input-container>
       </div>
-      
-      <md-input-container>
-        <md-button class="md-raised md-primary" type="submit">Create Event</md-button>
-      </md-input-container>
-    </form>
-  </div>
-
+      <div>
+        <h2 class="md-title">Tell us when your event will take place:</h2>
+        <div layout="row" layout-align="start center">
+          <div>
+              <md-datepicker name="event-date" ng-model="event.date" md-placeholder="Enter Date" ng-required="true" md-min-date="minDate"></md-datepicker>
+          </div>
+          <span flex="5"></span>
+          <md-input-container>
+            <input type="time" name="event-time "ng-model="event.time" ng-required="true" placeholder="Event time" flex="30">
+          </md-input-container>
+        </div>
+      </div>
+    </div>
+    <md-input-container>
+      <md-button class="md-raised md-primary" type="submit">Create Event</md-button>
+    </md-input-container>
+  </form>
+</div>
