@@ -11,7 +11,7 @@ var yelp = new Yelp({
 });
 
 var choicesLimit = 3;
-var resultsLimit = 5;
+var resultsLimit = 4;
 
 module.exports = {
   search: function(req, res){

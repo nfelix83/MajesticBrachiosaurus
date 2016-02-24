@@ -44,10 +44,8 @@ angular.module('clever.choices', [])
     $scope.choiceToRemove = $scope.choices.indexOf(choice);
     
     $scope.choices.splice($scope.choiceToRemove,1)
-    //Preference.removeChoice(choice.id);
-
-
-  }
+    Preference.removeChoice(choice.id);
+  };
 
 
 
@@ -134,8 +132,8 @@ angular.module('clever.choices', [])
 
   var removeChoice = function (business_id) {
     return $http({
-      method: 'Delete',
-      url: '/' + $routeParams.event_id + '/store',
+      method: 'Post',
+      url: '/' + $routeParams.event_id + '/remove',
       data: {
         id: business_id
       }

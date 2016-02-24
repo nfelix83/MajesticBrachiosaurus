@@ -3,5 +3,5 @@ var yelp = require('./yelpController.js');
 
 app.get('/:event_id/search', yelp.search);
 app.post('/:event_id/store', yelp.storeBusiness);
-app.delete(':event_id/store', yelp.removeBusiness);
+app.post('/:event_id/remove', yelp.removeBusiness);
 app.get('/:event_id/saved', yelp.getBusinesses);
