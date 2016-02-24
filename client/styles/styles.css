@@ -23,7 +23,11 @@ md-input-container.md-input-invalid ,
 md-input-container.md-input-invalid {
   color: red;
 }
-
 .resultname {
   font-weight: bold;
 }
+
+.thumb-up:hover {
+  color: dodgerblue;
+}
+

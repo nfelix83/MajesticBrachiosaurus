@@ -3,7 +3,6 @@ var Event = require('./eventModel.js');
 
 module.exports = {
   newEvent: function(req, res) {
-    console.log('req', req.body);
     var event_name = req.body.event_name;
     var location = req.body.location;
     var radius = req.body.radius;
@@ -64,7 +63,6 @@ module.exports = {
             choicesMade: 0
           });
         }
-
         console.log('get event id', event.event_id);
         res.redirect('/#/' + event.event_id);
       }
@@ -75,9 +73,7 @@ module.exports = {
     });
   },
   sendEvent: function(req, res) {
-    console.log(req.body);
     var event_id = req.params.event_id;
-    console.log(req.params);
     Event.findOne({event_id: event_id}, function(err, event) {
       if(err) {
         return console.error('err', err);
@@ -98,9 +94,34 @@ module.exports = {
             choicesMade: 0
           });
         }
-        console.log('send event data', event);
         res.json(event);
       }
+    });
+    
+  },
+  updateVotes: function(req, res) {
+    var event_id = req.params.event_id;
+    var store_id = req.body.id;
+    var index = req.body.index;
+    console.log('event id', event_id);
+    console.log('index', index);
+    console.log('store id', store_id);
+
+    
+
+    
+    
+    Event.findOne({event_id: event_id}, function(err, event) {
+      if(event) {
+        var data = {'$set': {"event.choices.businesses[index].votes" : event.choices.businesses[index].votes++}};
+        var options = {upsert: true};
+          console.log('event', event);
+          Event.update({event_id: event_id}, data, options, function(err, result) {
+          console.log('result', result);
+          console.log('event', event.choices.businesses[index]);
+        });
+      }
+      
     });
     
   }
