@@ -107,13 +107,9 @@ module.exports = {
     console.log('index', index);
     console.log('store id', store_id);
 
-    
-
-    
-    
     Event.findOne({event_id: event_id}, function(err, event) {
       if(event) {
-        var data = {'$set': {"event.choices.businesses[index].votes" : event.choices.businesses[index].votes++}};
+        var data = {$set: {"event.choices.businesses[index].votes" : event.choices.businesses[index].votes++}};
         var options = {upsert: true};
           console.log('event', event);
           Event.update({event_id: event_id}, data, options, function(err, result) {
