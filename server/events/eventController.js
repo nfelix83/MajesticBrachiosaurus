@@ -13,7 +13,7 @@ module.exports = {
     usersArray.push({
       ip: req.ip.split('.').join('-'),
       votesCast: 0,
-      choicesMade: 0
+      choicesMade: []
     });
 
     Event.findOne({event_id: event_id}, function(err, event) { //check to see if event id exists
@@ -64,7 +64,7 @@ module.exports = {
           event.users.push({
             ip: formattedIP,
             votesCast: 0,
-            choicesMade: 0
+            choicesMade: []
           });
         }
         console.log('get event id', event.event_id);
@@ -95,7 +95,7 @@ module.exports = {
           event.users.push({
             ip: formattedIP,
             votesCast: 0,
-            choicesMade: 0
+            choicesMade: []
           });
         }
         res.json(event);
