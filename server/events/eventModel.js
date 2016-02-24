@@ -23,7 +23,7 @@ var EventSchema = new Schema({
   },
   users: [{
     ip: String,
-    choicesMade: Number,
+    choicesMade: Array,
     votesCast: Number
   }]
 });
