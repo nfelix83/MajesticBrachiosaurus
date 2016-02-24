@@ -24,7 +24,10 @@
         </md-input-container>
         
         <md-datepicker name="event-date" ng-model="event.date" md-placeholder="Enter date" ng-required="true" md-min-date="minDate"></md-datepicker>
-        
+        <md-input-container class="md-block" flex-gt-sm>
+          <input type="time" name="event-time "ng-model="event.time" ng-required="true" placeholder="Event time">
+        </md-input-container>
+
         <md-input-container class="event-radius">
           <label>Radius</label>
             <md-select ng-model="event.radius">
