@@ -1,12 +1,9 @@
 angular.module('clever.choices', [])
 
 .controller('PreferenceController', function($scope, Preference, $routeParams, $mdToast){
-  //TODO send and receive preferences on same page how to receive and send/receive
   $scope.preference = {
     'term': ''
   };
-
-
 
   $scope.searchresults = [];
   $scope.choices = [];
@@ -21,7 +18,6 @@ angular.module('clever.choices', [])
       $scope.date = data.date;
       $scope.time = time[0] + ':' + time[1] + " " + time[2].substr(-2);
     });
-
   };
 
   $scope.sendPreference= function () {
@@ -34,6 +30,7 @@ angular.module('clever.choices', [])
           res.data[i].image_url = Preference.getDefaultImage();
         }
         // Change image url for higher res image
+        // Size reference: http://stackoverflow.com/questions/17965691/yelp-api-ios-getting-a-larger-image
         res.data[i].image_url = res.data[i].image_url.substr(0, res.data[i].image_url.length - 6) + "ls.jpg";
         $scope.searchresults.push(res.data[i]);
       }
@@ -41,26 +38,22 @@ angular.module('clever.choices', [])
   };
 
   $scope.removeChoice = function(choice) {
-
     $scope.choiceToRemove = $scope.choices.indexOf(choice);
-
-    $scope.choices.splice($scope.choiceToRemove,1)
-    Preference.removeChoice(choice.id);
+    $scope.choices.splice($scope.choiceToRemove,1);
+    //Preference.removeChoice(choice.id);
   };
-
-
 
   $scope.getChoices = function () {
     Preference.getChoices()
     .then(function (res, err) {
       $scope.choices = [];
       for (var i = 0; i < res.data.length; i++) {
-        // console.log(res.data[i]);
+        // Change image url for higher res image
+        // Size reference: http://stackoverflow.com/questions/17965691/yelp-api-ios-getting-a-larger-image
+        res.data[i].image_url = res.data[i].image_url.substr(0, res.data[i].image_url.length - 6) + "ls.jpg";
         $scope.choices.push(res.data[i]);
       }
     });
-
-
   };
 
   $scope.storeChoice = function (choice) {
@@ -78,9 +71,7 @@ angular.module('clever.choices', [])
       $mdToast.showSimple('Already saved');
     }
     return true;
-
   };
-
 
   $scope.updateVotes = function(choice) {
     Preference.updateVotes(choice)
@@ -90,12 +81,11 @@ angular.module('clever.choices', [])
           choice.votes = resp.data.votes;
         }
       });
-      
+
     });
   };
 
-
-
+  // Populate rvent details and saved choices on load
   $scope.getEventDetails();
   $scope.getChoices();
 })

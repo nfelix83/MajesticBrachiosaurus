@@ -10,8 +10,10 @@ var yelp = new Yelp({
   token_secret: 'h4supFvwL9h447AldVkG-WbsXqU'
 });
 
+// Set limit on how many results each IP can save
 var choicesLimit = 3;
-var resultsLimit = 4;
+// Set limit in search results returned
+var resultsLimit = 3;
 
 module.exports = {
   search: function(req, res){
@@ -100,7 +102,7 @@ module.exports = {
     }
   },
 
-  storeBusiness: function(req, res){ 
+  storeBusiness: function(req, res){
     Event.findOne({event_id: req.params.event_id})
     .then(function(event, err){
       var formattedIP = req.ip.split('.').join('-');

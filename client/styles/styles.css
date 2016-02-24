@@ -2,7 +2,7 @@
   width: 300px;
 }*/
 .main {
-	
+
 }
 .chat {
 	border: 5px solid black;
@@ -37,4 +37,11 @@ md-input-container.md-input-invalid {
 
 .md-icon-button[disabled] .thumb-up {
   color: dodgerblue;
+}
+
+.searchcard {
+  width: 300px;
+}
+.savedcard {
+  width: 300px;
 }
