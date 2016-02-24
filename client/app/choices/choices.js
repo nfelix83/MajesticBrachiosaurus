@@ -17,6 +17,7 @@ angular.module('clever.choices', [])
 
       $scope.eventName = data.event_name;
       $scope.location = data.location;
+      $scope.date = data.date;
     });
 
   };

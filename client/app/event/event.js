@@ -3,6 +3,7 @@ angular.module('clever.event', [])
 .controller('EventController',['$scope','Events','$location', function($scope,Events,$location){
   $scope.event = {};
   $scope.radius = [1, 5, 10, 15, 20, 25];
+  $scope.event.date = new Date();
   $scope.newDate = new Date();
   $scope.minDate = new Date(
       $scope.newDate.getFullYear(),
@@ -11,6 +12,8 @@ angular.module('clever.event', [])
       );
 
   $scope.sendNewEvent = function(){
+    
+    $scope.event.date = $scope.event.date.toDateString();
     console.log($scope.event);
     Events.sendNewEvent($scope.event)
     .then(function(data){

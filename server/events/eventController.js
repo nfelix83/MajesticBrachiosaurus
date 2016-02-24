@@ -6,6 +6,8 @@ module.exports = {
     var event_name = req.body.event_name;
     var location = req.body.location;
     var radius = req.body.radius;
+    var date = req.body.date;
+    console.log(date);
     var event_id = randomWords({exactly: 2}).join(""); //generate two random word to make it as event_id
     var usersArray = [];
     usersArray.push({
@@ -24,6 +26,7 @@ module.exports = {
           event_id: event_id,
           event_name: event_name,
           location: location,
+          date: date,
           radius: radius,
           users: usersArray
         }, function(err, event) {
