@@ -28,10 +28,7 @@ var EventSchema = new Schema({
     choicesMade: Array,
     votesCast: Number
   }],
-  messages:[{
-    username: String,
-    message: String
-  }]
+  messages: Array
 });
 
 module.exports = mongoose.model('Event', EventSchema);

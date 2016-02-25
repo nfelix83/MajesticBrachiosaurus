@@ -6,6 +6,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var eventController = require('./events/eventController.js');
 
+
 var port = process.env.PORT || 8000;
 //connect to heroku mongolab
 var uri = 'mongodb://testing:testing@ds013918.mongolab.com:13918/heroku_p92qhfjt' || 'mongodb://localhost/brachiosaurus';
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '../../client'));
 
 app.enable('trust proxy');
+
 
 io.on('connection', function (socket) {
   console.log('a user connected');
