@@ -71,7 +71,7 @@ angular.module('clever.choices', [])
   $scope.removeChoice = function(choice) {
     $scope.choiceToRemove = $scope.choices.indexOf(choice);
     $scope.choices.splice($scope.choiceToRemove,1);
-    //Preference.removeChoice(choice.id);
+    Preference.removeChoice(choice.id);
   };
 
   $scope.getChoices = function () {
