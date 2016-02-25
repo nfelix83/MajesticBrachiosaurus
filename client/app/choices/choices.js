@@ -10,11 +10,12 @@ angular.module('clever.choices', [])
 
   $scope.getEventDetails = function () {
     Preference.getEventDetails(function (data) {
-      var time = data.time.split(":");
-      $scope.eventId = data.event_id;
-      $scope.eventName = data.event_name;
-      $scope.location = data.location;
-      $scope.date = data.date;
+      console.log(data);
+      var time = data.event.time.split(":");
+      $scope.eventId = data.event.event_id;
+      $scope.eventName = data.event.event_name;
+      $scope.location = data.event.location;
+      $scope.date = data.event.date;
       $scope.time = time[0] + ':' + time[1] + " " + time[2].substr(-2);
       var votedBusiness = [];
       var changeToVotedBusiness = [];

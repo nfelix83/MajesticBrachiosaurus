@@ -99,8 +99,10 @@ module.exports = {
             choicesMade: []
           });
           event.save();
+
         }
-        res.json(event);
+        console.log('ip', formattedIP);
+        res.json({event: event, ip: formattedIP});
       }
     });
     
