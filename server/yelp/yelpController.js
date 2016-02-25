@@ -107,6 +107,7 @@ module.exports = {
     .then(function(event, err){
       var formattedIP = req.ip.split('.').join('-');
       if(err){
+        console.log('Event Error');
         res.status(500).send(err);
       }
       var formattedIP = req.ip.split('.').join('-');
@@ -118,6 +119,7 @@ module.exports = {
         }
       }
       if (userIndex < 0) {
+        console.log('User not found.');
         res.status(500).send('Please reload event page');
       }
       if (event.users[userIndex].choicesMade.length < choicesLimit) {
