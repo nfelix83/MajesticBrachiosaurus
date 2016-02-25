@@ -31,7 +31,8 @@ angular.module('clever', [
 .directive('chat', function(){
   return {
     restrict: 'E',
+    controller: 'ChatController',
     templateUrl: '/app/chat/chat.html'
-  }
-})
+  };
+});
 
