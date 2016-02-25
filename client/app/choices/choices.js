@@ -74,6 +74,7 @@ angular.module('clever.choices', [])
 
   $scope.removeChoice = function(choice) {
     $scope.choiceToRemove = $scope.choices.indexOf(choice);
+
     Preference.removeChoice(choice.id)
     .success(function success (response) {
       $scope.choices.splice($scope.choiceToRemove,1);
@@ -85,6 +86,7 @@ angular.module('clever.choices', [])
         $mdToast.showSimple('Must be user that submitted');
       }
     });
+
   };
 
   $scope.getChoices = function () {

@@ -21,16 +21,13 @@ app.enable('trust proxy');
 
 io.on('connection', function (socket) {
   console.log('a user connected');
-  var messages = [
-    {'name':'testname1', 'text':'testmessage1'},
-    {'name':'testname2', 'text':'testmessage2'},
-  ];
+  
   // get existing messages from db
   // var messages = eventController.getMessages();
   // send exisiting messages on new connection
-  socket.emit('init', {
-    messages: messages
-  });
+  // socket.emit('init', {
+  //   messages: messages
+  // });
   socket.on('send:message', function (data) {
     // store message in db
     // eventController.postMessage(data);
@@ -38,6 +35,7 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('send:message', {
       user: data.name,
       text: data.message
+
     });
   });
 });
