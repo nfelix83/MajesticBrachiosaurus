@@ -10,7 +10,6 @@ angular.module('clever.choices', [])
 
   $scope.getEventDetails = function () {
     Preference.getEventDetails(function (data) {
-      console.log(data);
       var time = data.event.time.split(":");
       $scope.eventId = data.event.event_id;
       $scope.eventName = data.event.event_name;
@@ -19,7 +18,7 @@ angular.module('clever.choices', [])
       $scope.time = time[0] + ':' + time[1] + " " + time[2].substr(-2);
       var votedBusiness = [];
       var changeToVotedBusiness = [];
-//commit purpose
+
       Preference.getChoices()
       .then(function(res) {
         $scope.choices = [];
@@ -29,25 +28,27 @@ angular.module('clever.choices', [])
           res.data[i].image_url = res.data[i].image_url.substr(0, res.data[i].image_url.length - 6) + "ls.jpg";
           $scope.choices.push(res.data[i]);
         }
+        //if the stored ips for specific business contains user's unique ip address
+        //grab all the business id into an array 
         data.event.choices.businesses.forEach(function(business) {
-          // data.users.forEach(function(user) {
-            console.log(data.ip);
-            if(business.ips.indexOf(data.ip) !== -1) {
-              votedBusiness.push(business.business_id);
-            }
-          // });
-          // if(business.ips.indexOf(data.users[0].ip) !== -1) {
-          //   votedBusiness.push(business.business_id);
-          // }
+          if(business.ips.indexOf(data.ip) !== -1) {
+            votedBusiness.push(business.business_id);
+          }
         });
+        //if the list of bussiness id in array matches any choice within the page
+        //disable the button for that user, so that the user cannot upvote again
         res.data.forEach(function(choice) {
           if(votedBusiness.indexOf(choice.id) !== -1) {
             choice.voted = true;
           }
           changeToVotedBusiness.push(choice);
         });
-
+        //re-render choices array into DOM with updated values to disable button for user
+        //on reload of page
         $scope.choices = changeToVotedBusiness;
+      })
+      .catch(function(err) {
+        return console.error('Error getting event data', err);
       });
 
     });
@@ -105,20 +106,25 @@ angular.module('clever.choices', [])
   };
 
   $scope.updateVotes = function(choice) {
+    //choice refers to specific business user clicks in DOM
     Preference.updateVotes(choice)
     .then(function(resp) {
+      //after clicking upvote button, immediately disable upvote button
       resp.data.event.users.forEach(function(user) {
         if(resp.data.business.ips.indexOf(user.ip) !== -1) {
           choice.voted = true;
         }
       });
-
+      //render to DOM the update vote count of specific choice they upvote
       $scope.choices.forEach(function(choice) {
         if(choice.id === resp.data.business.business_id) {
           choice.votes = resp.data.business.votes;
         }
       });
 
+    })
+    .catch(function(err) {
+      return console.error('Error updating vote', err);
     });
   };
 
