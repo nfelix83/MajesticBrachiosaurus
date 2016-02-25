@@ -7,7 +7,6 @@ angular.module('clever.choices', [])
 
   $scope.searchresults = [];
   $scope.choices = [];
-  // $scope.voted = false;
 
   $scope.getEventDetails = function () {
     Preference.getEventDetails(function (data) {
@@ -17,6 +16,26 @@ angular.module('clever.choices', [])
       $scope.location = data.location;
       $scope.date = data.date;
       $scope.time = time[0] + ':' + time[1] + " " + time[2].substr(-2);
+      var votedBusiness = [];
+      var changeToVotedBusiness = [];
+
+      Preference.getChoices()
+      .then(function(resp) {
+        data.choices.businesses.forEach(function(business) {
+          if(business.ips.indexOf(data.users[0].ip) !== -1) {
+            votedBusiness.push(business.business_id);
+          }
+        });
+        resp.data.forEach(function(choice) {
+          if(votedBusiness.indexOf(choice.id) !== -1) {
+            choice.voted = true;
+          }
+          changeToVotedBusiness.push(choice);
+        });  
+      
+        $scope.choices = changeToVotedBusiness;
+      });
+      
     });
   };
 

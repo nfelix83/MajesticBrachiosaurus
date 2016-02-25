@@ -118,10 +118,10 @@ module.exports = {
         event.choices.businesses.forEach(function(business) {
           if(business.business_id === business_id) {
             business.votes = business.votes + 1;
-            // if(business.ips.indexOf(ip) !== - 1) {
-            //   res.json({voted: true});
-            // }
-            // else {
+            if(business.ips.indexOf(ip) !== - 1) {
+              res.status(301).end();
+            }
+            else {
               business.ips.push(ip);
               event.save(function(err) {
                 if(err) {
@@ -130,7 +130,7 @@ module.exports = {
                 console.log('event', event.choices.businesses);
                 res.json({event: event, business: business});
               });
-            // }
+            }
           }
         }); 
       }
