@@ -18,6 +18,7 @@ var EventSchema = new Schema({
         type: Number,
         default: 0
       },
+      user: String,
       ips: Array
     }]
   },

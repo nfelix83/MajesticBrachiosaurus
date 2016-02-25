@@ -48,26 +48,31 @@ module.exports = {
 
         req.query.limit = req.query.limit || resultsLimit;
 
+        var expectedLimit = parseInt(req.query.limit);
+        req.query.limit += event.choices.businesses.length;
+
         yelp.search(req.query)
         .then(function(data){
           var businesses = [];
-          Promise.each(data.businesses, function(business){
-            yelp.business(business.id)
-            .then(function(result){
-              businesses.push(result);
-              if(businesses.length === parseInt(req.query.limit) || businesses.length === data.businesses.length){
-                res.json(businesses);
+          for (var i = 0; i < data.businesses.length; i++) {
+            var existingChoice = false;
+            for (var j = 0; j < event.choices.businesses.length; j++) {
+              if (event.choices.businesses[j].business_id === data.businesses[i].id) {
+                existingChoice = true;
               }
-            })
-            .catch(function(err){
-              console.error('inEach: ' + err);
-              res.status(500).send(err);
-            });
-          })
-          .catch(function(err){
-            console.error('inSearchThen: ' + err);
-            res.status(500).send(err);
-          });
+            }
+            if (existingChoice === false) {
+              businesses.push(data.businesses[i]);
+            }
+            if(businesses.length === expectedLimit || businesses.length === data.businesses.length){
+              res.json(businesses);
+            }
+          }
+        })
+        .catch(function(err){
+          console.log(err)
+          console.error('inSearchThen: ' + err);
+          res.status(500).send(err);
         });
       });
     } else {
@@ -123,7 +128,7 @@ module.exports = {
         res.status(500).send('Please reload event page');
       }
       if (event.users[userIndex].choicesMade.length < choicesLimit) {
-        event.choices.businesses.push({business_id: req.body.id, votes: 0});
+        event.choices.businesses.push({business_id: req.body.id, votes: 0, user: formattedIP});
         event.users[userIndex].choicesMade.push(req.body.id);
         event.save();
         res.status(201).send();
@@ -157,6 +162,13 @@ module.exports = {
           index = i;
           break;
         }
+      }
+      if (index === -1) {
+        res.status(500).send();
+      } else if (event.choices.businesses[index].user !== formattedIP) {
+        res.status(403).send();
+      } else if (event.choices.businesses[index].votes > 0 && (event.choices.businesses[index].votes > 1 || event.choices.businesses[index].ips[0] !== req.body.id)) {
+        res.status(418).send();
       }
       event.choices.businesses.splice(index, 1);
       event.users[userIndex].choicesMade.splice(event.users[userIndex].choicesMade.indexOf(req.body.id), 1);

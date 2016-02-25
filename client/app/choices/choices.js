@@ -61,6 +61,7 @@ angular.module('clever.choices', [])
       for (var i = 0; i < res.data.length; i++) {
         if (res.data[i].image_url === undefined) {
           res.data[i].image_url = Preference.getDefaultImage();
+          res.data[i].stored = false;
         }
         // Change image url for higher res image
         // Size reference: http://stackoverflow.com/questions/17965691/yelp-api-ios-getting-a-larger-image
@@ -73,7 +74,7 @@ angular.module('clever.choices', [])
   $scope.removeChoice = function(choice) {
     $scope.choiceToRemove = $scope.choices.indexOf(choice);
     $scope.choices.splice($scope.choiceToRemove,1);
-    //Preference.removeChoice(choice.id);
+    Preference.removeChoice(choice.id);
   };
 
   $scope.getChoices = function () {
@@ -89,21 +90,18 @@ angular.module('clever.choices', [])
     });
   };
 
-  $scope.storeChoice = function (choice) {
-    if (Preference.notInChoices(choice, $scope.choices)) {
-      Preference.storeChoice(choice.id)
-      .then(function success (response) {
-        $scope.choices.push(choice);
-        $mdToast.showSimple('Saved');
-        }, function error (response) {
-          if (response.status === 418) {
-            $mdToast.showSimple('Limit reached');
-          }
-      });
-    } else {
-      $mdToast.showSimple('Already saved');
-    }
-    return true;
+  $scope.storeChoice = function (choice, index) {
+    Preference.storeChoice(choice.id)
+    .success(function success (response) {
+      $scope.choices.push(choice);
+      $mdToast.showSimple('Saved');
+      $scope.searchresults[index].stored = true;
+    }).error(function error (response) {
+      if (response.status === 418) {
+        $mdToast.showSimple('Limit reached');
+        return false;
+      }
+    });
   };
 
   $scope.updateVotes = function(choice) {

@@ -28,7 +28,7 @@
         </form>
       </div>
       <div class="searchresults" layout="row" layout-wrap>
-        <md-card ng-hide='result.hide' ng-repeat="result in searchresults" class="searchcard">
+        <md-card ng-hide='result.stored' ng-repeat="result in searchresults" class="searchcard">
           <img ng-src={{result.image_url}} alt="image caption">
           <md-card-title>
             <md-card-title-text>
@@ -44,7 +44,7 @@
           </md-card-content>
           <md-card-actions layout-fill>
             <md-card-icon-actions layout="row" layout-align="end end">
-              <md-button class="md-icon-button" aria-label="Save" ng-click="result.hide = storeChoice(result)">
+              <md-button class="md-icon-button" aria-label="Save" ng-click="storeChoice(result, $index)">
                 <md-icon md-font-icon="material-icons">favorite</md-icon>
               </md-button>
               <md-button class="md-icon-button" aria-label="Dismiss" ng-click="result.hide = true">
