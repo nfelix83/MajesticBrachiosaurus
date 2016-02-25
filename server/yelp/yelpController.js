@@ -167,13 +167,14 @@ module.exports = {
         res.status(500).send();
       } else if (event.choices.businesses[index].user !== formattedIP) {
         res.status(403).send();
-      } else if (event.choices.businesses[index].votes > 0 && (event.choices.businesses[index].votes > 1 || event.choices.businesses[index].ips[0] !== req.body.id)) {
+      } else if (event.choices.businesses[index].votes > 0 && (event.choices.businesses[index].votes > 1 || event.choices.businesses[index].ips[0] !== formattedIP)) {
         res.status(418).send();
+      } else {
+        event.choices.businesses.splice(index, 1);
+        event.users[userIndex].choicesMade.splice(event.users[userIndex].choicesMade.indexOf(req.body.ip), 1);
+        event.save();
+        res.status(200).send();
       }
-      event.choices.businesses.splice(index, 1);
-      event.users[userIndex].choicesMade.splice(event.users[userIndex].choicesMade.indexOf(req.body.id), 1);
-      event.save();
-      res.status(200).send();
     });
   },
 
