@@ -19,7 +19,7 @@ module.exports = {
     Event.findOne({event_id: event_id}, function(err, event) { //check to see if event id exists
       if(err) {
         return console.error('Error finding event id', err);
-      }      
+      }
       //create new event if event doesn't exist
       if(!event) {
         Event.create({
@@ -34,11 +34,11 @@ module.exports = {
           if(err) {
             return console.error(err);
           }
-          
+
           res.json(event);  //send newly created event object to client
         });
       } else { //if randomly generated event_id already exist within db on create event call
-          return this.newEvent(req, res); //re-run function to get new event_id; 
+          return this.newEvent(req, res); //re-run function to get new event_id;
       }
     });
   },
@@ -77,7 +77,7 @@ module.exports = {
       else {
         res.redirect('/');
       }
-      
+
     });
   },
   sendEvent: function(req, res) {
@@ -111,7 +111,7 @@ module.exports = {
         res.json({event: event, ip: formattedIP});
       }
     });
-    
+
   },
   updateVotes: function(req, res) {
     var event_id = req.params.event_id;
@@ -146,24 +146,22 @@ module.exports = {
               });
             }
           }
-        }); 
+        });
       }
     });
   },
-  getMessages: function(event_id, cb) {
-    //post to socket to populate all chats existing in db
-    Event.findOne({event_id: event_id}, function(err, event) {
+  getMessages: function (event_id, cb) {
+    Event.findOne({event_id: event_id}, function (err, event) {
       if(err) {
         return console.error('Error in sending messages back to client', err);
       }
-
       if(event) {
         cb(event.messages);
       }
-    }); 
+    });
   },
-  postMessage: function(data) {
-    Event.findOne({event_id: data.eventId}, function(err, event) {
+  postMessage: function (data) {
+    Event.findOne({event_id: data.eventId}, function (err, event) {
       if(err) {
         return console.error('Error finding same event id for chatroom', err);
       }
@@ -171,8 +169,7 @@ module.exports = {
       if(event) {
         event.messages.push({eventId: data.eventId, name: data.name, text: data.text});
       }
-      
-      event.save(function(err) {
+      event.save (function(err) {
         if(err) {
           return console.error('Error in saving new chat messages', err);
         }
