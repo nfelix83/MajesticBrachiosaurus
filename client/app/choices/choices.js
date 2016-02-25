@@ -29,12 +29,13 @@ angular.module('clever.choices', [])
           res.data[i].image_url = res.data[i].image_url.substr(0, res.data[i].image_url.length - 6) + "ls.jpg";
           $scope.choices.push(res.data[i]);
         }
-        data.choices.businesses.forEach(function(business) {
-          data.users.forEach(function(user) {
-            if(business.ips.indexOf(user.ip) !== -1) {
+        data.event.choices.businesses.forEach(function(business) {
+          // data.users.forEach(function(user) {
+            console.log(data.ip);
+            if(business.ips.indexOf(data.ip) !== -1) {
               votedBusiness.push(business.business_id);
             }
-          });
+          // });
           // if(business.ips.indexOf(data.users[0].ip) !== -1) {
           //   votedBusiness.push(business.business_id);
           // }
