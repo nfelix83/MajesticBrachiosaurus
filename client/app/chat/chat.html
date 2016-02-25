@@ -1,16 +1,15 @@
-<h2 class="md-headline" align="center">Chat</h2>
-
-<div class='messages' ng-controller="ChatController"> 
-<div>
-<ul>
-  <li ng-repeat="message in messages"> {{message.text}} </li>
-</ul>
-
+<h3 class="md-title" align="center">Comments</h3>
+<div class='messages'>
+  <div ng-repeat="message in messages">{{message.name}} {{message.text}}</div>
 </div>
-<div>
-
-<form class="chatroom">
-<input ng-model='message' type='text' /><button ng-click="sendMessage()">Send</button>
-</form>
-
+<div class='chatcontrols'>
+  <form name="chat" class="chatinput" ng-submit="sendMessage()">
+    <md-input-container>
+      <label>Leave a message</label>
+      <input ng-model='message' name="message" type='text'>
+    </md-input-container>
+    <md-input-container>
+      <md-button ng-click="sendMessage()">Send</md-button>
+    </md-input-container>
+  </form>
 </div>

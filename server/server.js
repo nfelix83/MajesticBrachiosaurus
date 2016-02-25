@@ -4,8 +4,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var Event = require('./events/eventModel.js');
-
+var eventController = require('./events/eventController.js');
 
 var port = process.env.PORT || 8000;
 //connect to heroku mongolab
@@ -18,37 +17,28 @@ app.use(express.static(__dirname + '../../client'));
 
 app.enable('trust proxy');
 
-
-io.on('connection', function(socket){
-	//emit sends message out
-	console.log('a user connected');
-	socket.on('send:message', function (data) {
-    Event.findOne({event_id: data.event_id}, function(err, event) {
-      if(err) {
-        return console.error('Error finding same event id for chatroom',err);
-      }
-      //if event id is found, save new username/message into db
-      if(event) {
-        event.messages.username = data.name;
-        event.messages.message = data.message;
-      }
-
-      event.save(function(err) {
-        if(err) {
-          return console.error('Error in saving new chat messages', err);
-        }
-      });
-    });
-      socket.broadcast.emit('send:message', {
-        //user: name,
-        text: data.message
+io.on('connection', function (socket) {
+  console.log('a user connected');
+  var messages = [
+    {'name':'testname1', 'text':'testmessage1'},
+    {'name':'testname2', 'text':'testmessage2'},
+  ];
+  // get existing messages from db
+  // var messages = eventController.getMessages();
+  // send exisiting messages on new connection
+  socket.emit('init', {
+    messages: messages
+  });
+  socket.on('send:message', function (data) {
+    // store message in db
+    // eventController.postMessage(data);
+    // broadcast a user's message to other users
+    socket.broadcast.emit('send:message', {
+      user: data.name,
+      text: data.message
     });
   });
-		//event_name
-		//username
-	
 });
-
 
 app.get('/', function(req, res) {
   res.send(200, '/');

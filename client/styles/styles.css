@@ -1,47 +1,46 @@
-/*.md-card {
-  width: 300px;
-}*/
-.main {
+.main {}
 
-}
 .chat {
-	border: 5px solid black;
+    border: 5px solid black;
 }
+
 md-input-container {
-  width: 400px;
+    width: 400px;
 }
 
 .event-radius {
-  width: 100px;
+    width: 100px;
 }
 
 md-input-container:not(.md-input-invalid) {
-  color: green;
+    color: green;
 }
 
 md-input-container:not(.md-input-invalid) {
-  color: dodgerblue;
+    color: dodgerblue;
 }
 
-md-input-container.md-input-invalid ,
+md-input-container.md-input-invalid,
 md-input-container.md-input-invalid {
-  color: red;
+    color: red;
 }
+
 .resultname {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .thumb-up:hover {
-  color: dodgerblue;
+    color: dodgerblue;
 }
 
 .md-icon-button[disabled] .thumb-up {
-  color: dodgerblue;
+    color: dodgerblue;
 }
 
 .searchcard {
-  width: 300px;
+    width: 300px;
 }
+
 .savedcard {
-  width: 300px;
+    width: 300px;
 }
