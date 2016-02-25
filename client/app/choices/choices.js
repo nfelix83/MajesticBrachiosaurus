@@ -10,11 +10,12 @@ angular.module('clever.choices', [])
 
   $scope.getEventDetails = function () {
     Preference.getEventDetails(function (data) {
-      var time = data.time.split(":");
-      $scope.eventId = data.event_id;
-      $scope.eventName = data.event_name;
-      $scope.location = data.location;
-      $scope.date = data.date;
+      console.log(data);
+      var time = data.event.time.split(":");
+      $scope.eventId = data.event.event_id;
+      $scope.eventName = data.event.event_name;
+      $scope.location = data.event.location;
+      $scope.date = data.event.date;
       $scope.time = time[0] + ':' + time[1] + " " + time[2].substr(-2);
       var votedBusiness = [];
       var changeToVotedBusiness = [];
@@ -28,12 +29,13 @@ angular.module('clever.choices', [])
           res.data[i].image_url = res.data[i].image_url.substr(0, res.data[i].image_url.length - 6) + "ls.jpg";
           $scope.choices.push(res.data[i]);
         }
-        data.choices.businesses.forEach(function(business) {
-          data.users.forEach(function(user) {
-            if(business.ips.indexOf(user.ip) !== -1) {
+        data.event.choices.businesses.forEach(function(business) {
+          // data.users.forEach(function(user) {
+            console.log(data.ip);
+            if(business.ips.indexOf(data.ip) !== -1) {
               votedBusiness.push(business.business_id);
             }
-          });
+          // });
           // if(business.ips.indexOf(data.users[0].ip) !== -1) {
           //   votedBusiness.push(business.business_id);
           // }
