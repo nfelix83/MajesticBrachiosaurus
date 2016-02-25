@@ -73,8 +73,17 @@ angular.module('clever.choices', [])
 
   $scope.removeChoice = function(choice) {
     $scope.choiceToRemove = $scope.choices.indexOf(choice);
-    $scope.choices.splice($scope.choiceToRemove,1);
-    Preference.removeChoice(choice.id);
+    Preference.removeChoice(choice.id)
+    .success(function success (response) {
+      $scope.choices.splice($scope.choiceToRemove,1);
+      $mdToast.showSimple('Removed');
+    }).error(function error (error, status) {
+      if (status === 418) {
+        $mdToast.showSimple('User\'s votes exist');
+      } else if (status === 403) {
+        $mdToast.showSimple('Must be user that submitted');
+      }
+    });
   };
 
   $scope.getChoices = function () {
