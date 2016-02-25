@@ -28,7 +28,7 @@ angular.module('clever.chat',[])
     });
     // add the message to our model locally
     $scope.messages.push({
-      user: $scope.username,
+      user: $scope.name,
       text: $scope.message
     });
     // clear message box
