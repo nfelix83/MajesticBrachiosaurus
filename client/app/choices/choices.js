@@ -20,22 +20,29 @@ angular.module('clever.choices', [])
       var changeToVotedBusiness = [];
 
       Preference.getChoices()
-      .then(function(resp) {
+      .then(function(res) {
+        $scope.choices = [];
+        for (var i = 0; i < res.data.length; i++) {
+          // Change image url for higher res image
+          // Size reference: http://stackoverflow.com/questions/17965691/yelp-api-ios-getting-a-larger-image
+          res.data[i].image_url = res.data[i].image_url.substr(0, res.data[i].image_url.length - 6) + "ls.jpg";
+          $scope.choices.push(res.data[i]);
+        }
         data.choices.businesses.forEach(function(business) {
           if(business.ips.indexOf(data.users[0].ip) !== -1) {
             votedBusiness.push(business.business_id);
           }
         });
-        resp.data.forEach(function(choice) {
+        res.data.forEach(function(choice) {
           if(votedBusiness.indexOf(choice.id) !== -1) {
             choice.voted = true;
           }
           changeToVotedBusiness.push(choice);
-        });  
-      
+        });
+
         $scope.choices = changeToVotedBusiness;
       });
-      
+
     });
   };
 
