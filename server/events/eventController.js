@@ -66,6 +66,7 @@ module.exports = {
             votesCast: 0,
             choicesMade: []
           });
+          event.save();
         }
         console.log('get event id', event.event_id);
         res.redirect('/#/' + event.event_id);
@@ -97,6 +98,7 @@ module.exports = {
             votesCast: 0,
             choicesMade: []
           });
+          event.save();
         }
         res.json(event);
       }
