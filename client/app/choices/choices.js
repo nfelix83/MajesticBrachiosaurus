@@ -18,7 +18,7 @@ angular.module('clever.choices', [])
       $scope.time = time[0] + ':' + time[1] + " " + time[2].substr(-2);
       var votedBusiness = [];
       var changeToVotedBusiness = [];
-
+//commit purpose
       Preference.getChoices()
       .then(function(resp) {
         data.choices.businesses.forEach(function(business) {
