@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+//database schema of specific event id url
 var EventSchema = new Schema({
   event_id: String,
   event_name: String,
@@ -26,6 +27,10 @@ var EventSchema = new Schema({
     ip: String,
     choicesMade: Array,
     votesCast: Number
+  }],
+  messages:[{
+    username: String,
+    message: String
   }]
 });
 

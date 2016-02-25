@@ -18,7 +18,7 @@ module.exports = {
 
     Event.findOne({event_id: event_id}, function(err, event) { //check to see if event id exists
       if(err) {
-        return console.error('err', err);
+        return console.error('Error finding event id', err);
       }      
       //create new event if event doesn't exist
       if(!event) {
@@ -38,7 +38,7 @@ module.exports = {
           res.json(event);  //send newly created event object to client
         });
       } else { //if randomly generated event_id already exist within db on create event call
-          return newEvent(req, res); //re-run function to get new event_id; 
+          return this.newEvent(req, res); //re-run function to get new event_id; 
       }
     });
   },
@@ -48,18 +48,20 @@ module.exports = {
     //return data with same event_id
     Event.findOne({event_id: event_id}, function(err, event) {
       if(err) {
-        return console.error('err', err);
+        return console.error('Error redirecting to event page', err);
       }
       if(event) {
-
+        //if event id is found
         var formattedIP = req.ip.split('.').join('-');
         var existingUser = false;
+        //check to see if that user ip already exist in db
         for (var i = 0; i < event.users.length; i++) {
           if (event.users[i].ip === formattedIP) {
             existingUser = true;
             break;
           }
         }
+        //if user ip doesn't exist in db, create new user with ip and other data and store in db
         if (existingUser === false) {
           event.users.push({
             ip: formattedIP,
@@ -68,9 +70,10 @@ module.exports = {
           });
           event.save();
         }
-        console.log('get event id', event.event_id);
+        //redirect to angular route of event id
         res.redirect('/#/' + event.event_id);
       }
+      //if the url with event id doesnt exist, reroute to home page to create
       else {
         res.redirect('/');
       }
@@ -81,17 +84,20 @@ module.exports = {
     var event_id = req.params.event_id;
     Event.findOne({event_id: event_id}, function(err, event) {
       if(err) {
-        return console.error('err', err);
+        return console.error('Error sending event data', err);
       }
+      //if event id is found in db
       if(event) {
         var formattedIP = req.ip.split('.').join('-');
         var existingUser = false;
+        //check to see if user ip already exist in db
         for (var i = 0; i < event.users.length; i++) {
           if (event.users[i].ip === formattedIP) {
             existingUser = true;
             break;
           }
         }
+        //if user ip doesn't exist in db, create new user with ip and other data and store in db
         if (existingUser === false) {
           event.users.push({
             ip: formattedIP,
@@ -101,7 +107,7 @@ module.exports = {
           event.save();
 
         }
-        console.log('ip', formattedIP);
+        //send back event information and unique user ip address
         res.json({event: event, ip: formattedIP});
       }
     });
@@ -113,25 +119,29 @@ module.exports = {
     var ip = req.ip.split('.').join('-');
     var business_id = req.body.id;
     Event.findOne({event_id: event_id}, function(err, event) {
-      // var listOfIps = event.choices.businesses[index].ips;
       if(err) {
-        return console.error(err);
+        return console.error('Error finding event it on upvote',err);
       }
-
+      //if event id exists
       if(event) {
         event.choices.businesses.forEach(function(business) {
+          //increment vote count on specific business upvote click
           if(business.business_id === business_id) {
             business.votes = business.votes + 1;
+            //if user ip already exist in specific business data
+            //send back 302 Found status code and end
+            //this is just for safety caution. User will not be able to click the upvote
+            //button once clicked once
             if(business.ips.indexOf(ip) !== - 1) {
-              res.status(301).end();
+              res.status(302).end();
             }
+            //once upvote button is clicked, save user ip address to specific business they made
             else {
               business.ips.push(ip);
               event.save(function(err) {
                 if(err) {
-                  return console.error(err);
+                  return console.error('Error updating upvote',err);
                 }
-                console.log('event', event.choices.businesses);
                 res.json({event: event, business: business});
               });
             }
