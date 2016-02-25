@@ -128,7 +128,7 @@ module.exports = {
         res.status(500).send('Please reload event page');
       }
       if (event.users[userIndex].choicesMade.length < choicesLimit) {
-        event.choices.businesses.push({business_id: req.body.id, votes: 0});
+        event.choices.businesses.push({business_id: req.body.id, votes: 0, user: formattedIP});
         event.users[userIndex].choicesMade.push(req.body.id);
         event.save();
         res.status(201).send();
@@ -162,6 +162,13 @@ module.exports = {
           index = i;
           break;
         }
+      }
+      if (index === -1) {
+        res.status(500).send();
+      } else if (event.choices.businesses[index].user !== formattedIP) {
+        res.status(403).send();
+      } else if (event.choices.businesses[index].votes > 0 && (event.choices.businesses[index].votes > 1 || event.choices.businesses[index].ips[0] !== req.body.id)) {
+        res.status(418).send();
       }
       event.choices.businesses.splice(index, 1);
       event.users[userIndex].choicesMade.splice(event.users[userIndex].choicesMade.indexOf(req.body.id), 1);
