@@ -96,10 +96,9 @@ angular.module('clever.choices', [])
       $scope.choices.push(choice);
       $mdToast.showSimple('Saved');
       $scope.searchresults[index].stored = true;
-    }).error(function error (response) {
-      if (response.status === 418) {
+    }).error(function error (error, status) {
+      if (status === 418) {
         $mdToast.showSimple('Limit reached');
-        return false;
       }
     });
   };
