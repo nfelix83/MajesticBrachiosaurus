@@ -149,6 +149,35 @@ module.exports = {
         }); 
       }
     });
+  },
+  getMessage: function(event_id) {
+    //post to socket to populate all chats existing in db
+    Event.findOne({event_id: event_id}, function(err, event) {
+      if(err) {
+        return console.error('Error in sending messages back to client', err);
+      }
+
+      if(event) {
+        return event.messages;
+      }
+    }); 
+  },
+  postMessage: function(data) {
+    Event.findOne({event_id: data.event}, function(err, event) {
+      if(err) {
+        return console.error('Error finding same event id for chatroom', err);
+      }
+      //if event id is found, save new username/message into db
+      if(event) {
+        event.messages.push({name: data.name, text: data.text});
+      }
+      
+      event.save(function(err) {
+        if(err) {
+          return console.error('Error in saving new chat messages', err);
+        }
+      });
+    });
   }
 
 };
