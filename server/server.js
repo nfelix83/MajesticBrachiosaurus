@@ -21,6 +21,15 @@ app.enable('trust proxy');
 io.on('connection', function(socket){
 	//emit sends message out
 	console.log('a user connected');
+	socket.on('send:message', function (data) {
+      socket.broadcast.emit('send:message', {
+        //user: name,
+        text: data.message
+    });
+  });
+		//event_name
+		//username
+	
 });
 
 

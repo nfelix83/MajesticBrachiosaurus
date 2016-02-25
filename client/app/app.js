@@ -2,7 +2,9 @@ angular.module('clever', [
   'clever.choices',
   'clever.event',
   'ngMaterial',
-  'ngRoute'
+  'ngRoute',
+  'clever.chat',
+  'clever.services'
 ])
 
 .config(function($locationProvider, $routeProvider, $httpProvider){
@@ -26,8 +28,10 @@ angular.module('clever', [
   $locationProvider.html5Mode(true);
 })
 
-.filter('substr', function() {
-  return function(str, start, end) {
-    return str.substr(start, end);
-  };
-});
+.directive('chat', function(){
+  return {
+    restrict: 'E',
+    templateUrl: '/app/chat/chat.html'
+  }
+})
+
