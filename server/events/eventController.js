@@ -150,7 +150,7 @@ module.exports = {
       }
     });
   },
-  getMessage: function(event_id) {
+  getMessages: function(event_id, cb) {
     //post to socket to populate all chats existing in db
     Event.findOne({event_id: event_id}, function(err, event) {
       if(err) {
@@ -158,7 +158,7 @@ module.exports = {
       }
 
       if(event) {
-        return event.messages;
+        cb(event.messages);
       }
     }); 
   },
