@@ -7,7 +7,6 @@ angular.module('clever.choices', [])
 
   $scope.searchresults = [];
   $scope.choices = [];
-  // $scope.voted = false;
 
   $scope.getEventDetails = function () {
     Preference.getEventDetails(function (data) {
@@ -17,6 +16,26 @@ angular.module('clever.choices', [])
       $scope.location = data.location;
       $scope.date = data.date;
       $scope.time = time[0] + ':' + time[1] + " " + time[2].substr(-2);
+      var votedBusiness = [];
+      var changeToVotedBusiness = [];
+
+      Preference.getChoices()
+      .then(function(resp) {
+        data.choices.businesses.forEach(function(business) {
+          if(business.ips.indexOf(data.users[0].ip) !== -1) {
+            votedBusiness.push(business.business_id);
+          }
+        });
+        resp.data.forEach(function(choice) {
+          if(votedBusiness.indexOf(choice.id) !== -1) {
+            choice.voted = true;
+          }
+          changeToVotedBusiness.push(choice);
+        });  
+      
+        $scope.choices = changeToVotedBusiness;
+      });
+      
     });
   };
 
@@ -76,14 +95,9 @@ angular.module('clever.choices', [])
   $scope.updateVotes = function(choice) {
     Preference.updateVotes(choice)
     .then(function(resp) {
-      console.log('resp', resp);
       resp.data.event.users.forEach(function(user) {
-        console.log('user', user);
         if(resp.data.business.ips.indexOf(user.ip) !== -1) {
-
           choice.voted = true;
-          console.log(choice);
-          // $scope.voted = true;
         }
       });
 
@@ -97,6 +111,7 @@ angular.module('clever.choices', [])
   };
 
   // Populate rvent details and saved choices on load
+
   $scope.getEventDetails();
   $scope.getChoices();
 })
@@ -148,7 +163,6 @@ angular.module('clever.choices', [])
       data: $routeParams
     })
     .then(function (res) {
-      console.log(res.data);
       cb(res.data);
     });
   };
