@@ -74,6 +74,7 @@ angular.module('clever.choices', [])
 
   $scope.removeChoice = function(choice) {
     $scope.choiceToRemove = $scope.choices.indexOf(choice);
+<<<<<<< bdf41a87ad2025369c6fb4a13c9092f67e7dbd1c
     Preference.removeChoice(choice.id)
     .success(function success (response) {
       $scope.choices.splice($scope.choiceToRemove,1);
@@ -85,6 +86,10 @@ angular.module('clever.choices', [])
         $mdToast.showSimple('Must be user that submitted');
       }
     });
+=======
+    $scope.choices.splice($scope.choiceToRemove,1);
+    Preference.removeChoice(choice.id);
+>>>>>>> '(feat) Add user to chat'
   };
 
   $scope.getChoices = function () {

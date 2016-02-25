@@ -17,6 +17,7 @@ app.use(express.static(__dirname + '../../client'));
 
 app.enable('trust proxy');
 
+
 io.on('connection', function (socket) {
   console.log('a user connected');
   var messages = [
@@ -36,6 +37,7 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('send:message', {
       user: data.name,
       text: data.message
+
     });
   });
 });
