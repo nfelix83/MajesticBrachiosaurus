@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var url = require('url');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -18,19 +19,23 @@ app.use(express.static(__dirname + '../../client'));
 
 app.enable('trust proxy');
 
-
 io.on('connection', function (socket) {
   console.log('a user connected');
-  
+  // parse the event id from the socket headers
+  var eventId = url.parse(socket.handshake.headers.referer).path.substr(1);
+
   // get existing messages from db
-  // var messages = eventController.getMessages();
-  // send exisiting messages on new connection
-  // socket.emit('init', {
-  //   messages: messages
-  // });
+  eventController.getMessages(eventId, function(messages){
+    // send exisiting messages on new connection
+    socket.emit('init', {
+      messages: messages
+    });
+  });
+
   socket.on('send:message', function (data) {
+    console.log('socket sent', data);
     // store message in db
-    // eventController.postMessage(data);
+    eventController.postMessage(data);
     // broadcast a user's message to other users
     socket.broadcast.emit('send:message', {
       user: data.name,
