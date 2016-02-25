@@ -163,13 +163,13 @@ module.exports = {
     }); 
   },
   postMessage: function(data) {
-    Event.findOne({event_id: data.event}, function(err, event) {
+    Event.findOne({event_id: data.eventId}, function(err, event) {
       if(err) {
         return console.error('Error finding same event id for chatroom', err);
       }
       //if event id is found, save new username/message into db
       if(event) {
-        event.messages.push({name: data.name, text: data.text});
+        event.messages.push({eventId: data.eventId, name: data.name, text: data.text});
       }
       
       event.save(function(err) {
