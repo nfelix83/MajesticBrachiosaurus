@@ -96,10 +96,12 @@ angular.module('clever.choices', [])
         }, function error (response) {
           if (response.status === 418) {
             $mdToast.showSimple('Limit reached');
+            return false;
           }
       });
     } else {
       $mdToast.showSimple('Already saved');
+      return false;
     }
     return true;
   };
