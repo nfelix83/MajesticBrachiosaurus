@@ -18,13 +18,18 @@ angular.module('clever.choices', [])
       $scope.time = time[0] + ':' + time[1] + " " + time[2].substr(-2);
       var votedBusiness = [];
       var changeToVotedBusiness = [];
-
+//commit purpose
       Preference.getChoices()
       .then(function(resp) {
         data.choices.businesses.forEach(function(business) {
-          if(business.ips.indexOf(data.users[0].ip) !== -1) {
-            votedBusiness.push(business.business_id);
-          }
+          data.users.forEach(function(user) {
+            if(business.ips.indexOf(user.ip) !== -1) {
+              votedBusiness.push(business.business_id);
+            }
+          });
+          // if(business.ips.indexOf(data.users[0].ip) !== -1) {
+          //   votedBusiness.push(business.business_id);
+          // }
         });
         resp.data.forEach(function(choice) {
           if(votedBusiness.indexOf(choice.id) !== -1) {
