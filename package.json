@@ -22,7 +22,6 @@
     "url": "https://github.com/jyoon006/MajesticBrachiosaurus/issues"
   },
   "dependencies": {
-    "bower": "^1.7.2",
     "bluebird": "^3.3.1",
     "body-parser": "^1.15.0",
     "bower": "^1.7.7",
@@ -38,6 +37,7 @@
     "grunt-shell": "^1.1.2",
     "mongoose": "^4.4.4",
     "random-words": "0.0.1",
+    "socket.io": "^1.4.5",
     "yelp": "^1.0.1"
   }
 }

@@ -1,0 +1,16 @@
+<h2 class="md-headline" align="center">Chat</h2>
+
+<div class='messages' ng-controller="ChatController"> 
+<div>
+<ul>
+  <li ng-repeat="message in messages"> {{message.text}} </li>
+</ul>
+
+</div>
+<div>
+
+<form class="chatroom">
+<input ng-model='message' type='text' /><button ng-click="sendMessage()">Send</button>
+</form>
+
+</div>
