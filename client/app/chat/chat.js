@@ -10,10 +10,7 @@ angular.module('clever.chat',[])
 
   // add messages locally when received from server
   socket.on('send:message', function (message) {
-    $scope.messages.push({
-      name: $scope.username,
-      text: $scope.messageText
-    });
+    $scope.messages.push(message);
   });
 
   $scope.sendMessage = function () {
