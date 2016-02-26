@@ -62,7 +62,6 @@ angular.module('clever.choices', [])
       for (var i = 0; i < res.data.length; i++) {
         if (res.data[i].image_url === undefined) {
           res.data[i].image_url = Preference.getDefaultImage();
-          res.data[i].stored = false;
         }
         // Change image url for higher res image
         // Size reference: http://stackoverflow.com/questions/17965691/yelp-api-ios-getting-a-larger-image
@@ -73,20 +72,25 @@ angular.module('clever.choices', [])
   };
 
   $scope.removeChoice = function(choice) {
-    $scope.choiceToRemove = $scope.choices.indexOf(choice);
-
-    Preference.removeChoice(choice.id)
-    .success(function success (response) {
-      $scope.choices.splice($scope.choiceToRemove,1);
-      $mdToast.showSimple('Removed');
-    }).error(function error (error, status) {
-      if (status === 418) {
-        $mdToast.showSimple('User\'s votes exist');
-      } else if (status === 403) {
-        $mdToast.showSimple('Must be user that submitted');
+    $scope.choiceToRemove = undefined;
+    for (var i = 0; i < $scope.choices.length; i++) {
+      if ($scope.choices[i].id === choice.id) {
+        $scope.choiceToRemove = $scope.choices[i];
       }
-    });
-
+    }
+    if ($scope.choiceToRemove !== undefined) {
+      Preference.removeChoice(choice.id)
+      .success(function success (response) {
+        $scope.choices.splice($scope.choiceToRemove,1);
+        $mdToast.showSimple('Removed');
+      }).error(function error (error, status) {
+        if (status === 418) {
+          $mdToast.showSimple('User\'s votes exist');
+        } else if (status === 403) {
+          $mdToast.showSimple('Must be user that submitted');
+        }
+      });
+    }
   };
 
   $scope.getChoices = function () {
@@ -107,7 +111,7 @@ angular.module('clever.choices', [])
     .success(function success (response) {
       $scope.choices.push(choice);
       $mdToast.showSimple('Saved');
-      $scope.searchresults[index].stored = true;
+      $scope.searchresults.splice(index, 1);
     }).error(function error (error, status) {
       if (status === 418) {
         $mdToast.showSimple('Limit reached');
@@ -141,7 +145,7 @@ angular.module('clever.choices', [])
   // Populate rvent details and saved choices on load
 
   $scope.getEventDetails();
-  $scope.getChoices();
+  // $scope.getChoices();
 })
 
 .factory('Preference', function ($http, $routeParams) {
@@ -225,5 +229,40 @@ angular.module('clever.choices', [])
     notInChoices: notInChoices,
     getDefaultImage: getDefaultImage,
     updateVotes: updateVotes
+  };
+})
+
+.directive('dismissSearch', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, elem, attrs) {
+      elem.on('click', function() {
+        var card = elem.closest('.searchcard');
+        card.toggleClass('fx-fade-down-big fx-fade-up-big');
+        var name = card.find('md-card-title').text().trim();
+        var index = -1;
+        for (var i = 0; i < scope.searchresults.length; i++) {
+          if (scope.searchresults[i].name === name) {
+            index = i;
+          }
+        }
+        if (index > -1) {
+          scope.searchresults.splice(index, 1); 
+        }
+      });
+    }
+  };
+})
+
+.directive('removeChoice', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, elem, attrs) {
+      elem.on('click', function() {
+        var card = elem.closest('.savedcard');
+        card.toggleClass('fx-fade-down-big fx-fade-up-big');
+        scope.removeChoice(JSON.parse(attrs['removeChoice']));
+      });
+    }
   };
 });
