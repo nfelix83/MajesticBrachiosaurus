@@ -38,8 +38,8 @@ io.on('connection', function (socket) {
     eventController.postMessage(data);
     // broadcast a user's message to other users
     socket.broadcast.emit('send:message', {
-      user: data.name,
-      text: data.message
+      name: data.user,
+      message: data.message
 
     });
   });
