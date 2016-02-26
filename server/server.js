@@ -40,7 +40,6 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('send:message', {
       name: data.name,
       text: data.text
-
     });
   });
 });
