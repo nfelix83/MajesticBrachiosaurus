@@ -72,16 +72,16 @@ angular.module('clever.choices', [])
   };
 
   $scope.removeChoice = function(choice) {
-    $scope.choiceToRemove = undefined;
+    var removeIndex = undefined;
     for (var i = 0; i < $scope.choices.length; i++) {
       if ($scope.choices[i].id === choice.id) {
-        $scope.choiceToRemove = $scope.choices[i];
+        removeIndex = i;
       }
     }
-    if ($scope.choiceToRemove !== undefined) {
+    if (removeIndex !== undefined) {
       Preference.removeChoice(choice.id)
       .success(function success (response) {
-        $scope.choices.splice($scope.choiceToRemove,1);
+        $scope.choices.splice(removeIndex, 1);
         $mdToast.showSimple('Removed');
       }).error(function error (error, status) {
         if (status === 418) {
@@ -229,40 +229,5 @@ angular.module('clever.choices', [])
     notInChoices: notInChoices,
     getDefaultImage: getDefaultImage,
     updateVotes: updateVotes
-  };
-})
-
-.directive('dismissSearch', function() {
-  return {
-    restrict: 'A',
-    link: function(scope, elem, attrs) {
-      elem.on('click', function() {
-        var card = elem.closest('.searchcard');
-        card.toggleClass('fx-fade-down-big fx-fade-up-big');
-        var name = card.find('md-card-title').text().trim();
-        var index = -1;
-        for (var i = 0; i < scope.searchresults.length; i++) {
-          if (scope.searchresults[i].name === name) {
-            index = i;
-          }
-        }
-        if (index > -1) {
-          scope.searchresults.splice(index, 1); 
-        }
-      });
-    }
-  };
-})
-
-.directive('removeChoice', function() {
-  return {
-    restrict: 'A',
-    link: function(scope, elem, attrs) {
-      elem.on('click', function() {
-        var card = elem.closest('.savedcard');
-        card.toggleClass('fx-fade-down-big fx-fade-up-big');
-        scope.removeChoice(JSON.parse(attrs['removeChoice']));
-      });
-    }
   };
 });

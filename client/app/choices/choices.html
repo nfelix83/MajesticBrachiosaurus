@@ -28,7 +28,7 @@
         </form>
       </div>
       <div class="searchresults" layout="row" layout-wrap>
-        <md-card ng-repeat="result in searchresults" class="searchcard fx-fade-down-big">
+        <md-card ng-hide='result.hide' ng-repeat="result in searchresults" class="searchcard fx-zoom-normal fx-speed-750">
           <img ng-src={{result.image_url}} alt="image caption">
           <md-card-title>
             <md-card-title-text>
@@ -47,7 +47,7 @@
               <md-button class="md-icon-button" aria-label="Save" ng-click="storeChoice(result, $index)">
                 <md-icon md-font-icon="material-icons">favorite</md-icon>
               </md-button>
-              <md-button class="md-icon-button" aria-label="Dismiss" dismiss-search>
+              <md-button class="md-icon-button" aria-label="Dismiss" ng-click="result.hide = true">
                 <md-icon md-font-icon="material-icons">clear</md-icon>
               </md-button>
             </md-card-icon-actions>
@@ -59,7 +59,7 @@
     <h2 class="md-headline">Saved Choices</h2>
     <div class="saveddisplay" layout="row" layout-wrap>
       <!-- Display saved cards, sorting by descending votes -->
-      <md-card ng-repeat="choice in choices | orderBy:'votes':true" class="savedcard fx-fade-up-big">
+      <md-card ng-repeat="choice in choices | orderBy:'votes':true" class="savedcard fx-zoom-normal fx-speed-750">
         <img ng-src={{choice.image_url}} class="md-card-image" alt="image caption">
         <md-card-title>
           <md-card-title-text>
@@ -81,7 +81,7 @@
             <md-button class="md-icon-button" aria-label="Upvote" ng-disabled='choice.voted' ng-click="updateVotes(choice)" >
               <md-icon class="material-icons thumb-up">thumb_up</md-icon>
             </md-button>
-            <md-button class="md-icon-button" aria-label="Dismiss" remove-choice={{choice}}>
+            <md-button class="md-icon-button" aria-label="Dismiss" ng-click="removeChoice(choice)">
               <md-icon md-font-icon="material-icons">clear</md-icon>
             </md-button>
           </md-card-icon-actions>
@@ -92,6 +92,8 @@
   </div>
   <div flex='20' class='chat'>
     <chat></chat>
+    
+    
 
   </div>
 </div>
