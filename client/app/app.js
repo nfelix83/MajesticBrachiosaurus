@@ -3,6 +3,8 @@ angular.module('clever', [
   'clever.event',
   'ngMaterial',
   'ngRoute',
+  'ngAnimate',
+  'ngFx',
   'clever.chat',
   'clever.services'
 ])
