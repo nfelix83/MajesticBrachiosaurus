@@ -31,7 +31,7 @@ io.on('connection', function (socket) {
       messages: messages
     });
   });
-
+//commit purpose
   socket.on('send:message', function (data) {
     console.log('socket sent', data);
     // store message in db
