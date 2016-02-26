@@ -10,7 +10,7 @@ var eventController = require('./events/eventController.js');
 
 var port = process.env.PORT || 8000;
 //connect to heroku mongolab
-var uri = 'mongodb://testing:testing@ds013918.mongolab.com:13918/heroku_p92qhfjt' || 'mongodb://localhost/brachiosaurus';
+var uri = 'mongodb://testing:testing@ds017248.mlab.com:17248/heroku_pkxn9txr' || 'mongodb://localhost/brachiosaurus';
 mongoose.connect(uri);
 
 app.use(bodyParser.urlencoded({extended: true}));
