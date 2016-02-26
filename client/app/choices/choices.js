@@ -72,16 +72,16 @@ angular.module('clever.choices', [])
   };
 
   $scope.removeChoice = function(choice) {
-    $scope.choiceToRemove = undefined;
+    var removeIndex = undefined;
     for (var i = 0; i < $scope.choices.length; i++) {
       if ($scope.choices[i].id === choice.id) {
-        $scope.choiceToRemove = $scope.choices[i];
+        removeIndex = i;
       }
     }
-    if ($scope.choiceToRemove !== undefined) {
+    if (removeIndex !== undefined) {
       Preference.removeChoice(choice.id)
       .success(function success (response) {
-        $scope.choices.splice($scope.choiceToRemove,1);
+        $scope.choices.splice(removeIndex, 1);
         $mdToast.showSimple('Removed');
       }).error(function error (error, status) {
         if (status === 418) {
@@ -250,6 +250,19 @@ angular.module('clever.choices', [])
           scope.searchresults.splice(index, 1); 
         }
       });
+    }
+  };
+})
+
+.directive('choices', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, elem, attrs) {
+      if (scope.$last) {
+        $timeout(function() { 
+          $('.savedcard').toggleClass('fx-fade-down-big fx-fade-up-big');
+        });
+      }
     }
   };
 })
