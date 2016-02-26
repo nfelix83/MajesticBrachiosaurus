@@ -31,16 +31,14 @@ io.on('connection', function (socket) {
       messages: messages
     });
   });
-//commit purpose
   socket.on('send:message', function (data) {
-    console.log('socket sent', data);
     // store message in db
     eventController.postMessage(data);
     // broadcast a user's message to other users
     socket.broadcast.emit('send:message', {
+      eventId: data.eventId,
       name: data.name,
       text: data.text
-
     });
   });
 });
