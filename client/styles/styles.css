@@ -67,3 +67,7 @@ md-input-container.md-input-invalid {
 .savedcard {
   width: 300px;
 }
+
+.hackreactor {
+  z-index: 100;
+}

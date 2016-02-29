@@ -1,4 +1,4 @@
-angular.module('clever.event', [])
+angular.module('nytebyte.event', [])
 
 .controller('EventController',['$scope','Events','$location', function($scope,Events,$location){
   $scope.event = {};
@@ -30,15 +30,15 @@ angular.module('clever.event', [])
       data: event
     })
     .then(function(res){
-      
+
       return res.data;
     });
   };
-  
+
   return {
     sendNewEvent : sendNewEvent
   };
-  
+
 });
 
 

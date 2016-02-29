@@ -1,4 +1,4 @@
-angular.module('clever.choices', [])
+angular.module('nytebyte.choices', [])
 
 .controller('PreferenceController', function($scope, Preference, $routeParams, $mdToast){
   $scope.preference = {
@@ -29,7 +29,7 @@ angular.module('clever.choices', [])
           $scope.choices.push(res.data[i]);
         }
         //if the stored ips for specific business contains user's unique ip address
-        //grab all the business id into an array 
+        //grab all the business id into an array
         data.event.choices.businesses.forEach(function(business) {
           if(business.ips.indexOf(data.ip) !== -1) {
             votedBusiness.push(business.business_id);

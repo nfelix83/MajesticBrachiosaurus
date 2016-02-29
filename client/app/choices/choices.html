@@ -6,26 +6,27 @@
 </md-toolbar>
 <div layout="row" layout-margin class="main">
   <div flex="80">
-  <div layout="row" layout-align="start center">
-    <md-button class="md-icon-button" aria-labe="Email Link" ng-href="mailto:?subject=Help plan {{eventName}}!&body=Someone has asked you to help plan {{eventName}}. Visit http://nytebyte.herokuapp.com/{{eventId}} to get started!">
-      <md-icon md-font-icon="material-icons">email</md-icon>
-    </md-button>
-    <span class="md-body-1">Email a link to this page or share <a ng-href="http://nytebyte.herokuapp.com/{{eventId}}">http://nytebyte.herokuapp.com/{{eventId}}</a> with friends!</span>
-  </div>
+    <div layout="row" layout-align="start center">
+      <md-button class="md-icon-button" aria-labe="Email Link" ng-href="mailto:?subject=Help plan {{eventName}}!&body=Someone has asked you to help plan {{eventName}}. Visit http://nytebyte.herokuapp.com/{{eventId}} to get started!">
+        <md-icon md-font-icon="material-icons">email</md-icon>
+      </md-button>
+      <span class="md-body-1">Email a link to this page or share <a ng-href="http://nytebyte.herokuapp.com/{{eventId}}">http://nytebyte.herokuapp.com/{{eventId}}</a> with friends!</span>
+    </div>
     <div id="search">
       <div class="searchcontrols">
         <h2 class="md-headline">Search</h2>
         <form layout="row" ng-submit="sendPreference()">
-            <md-input-container>
-              <label>Search</label>
-              <input class="md-primary" type="text" ng-model="preference.term" name="term">
-            </md-input-container>
-            <md-input-container>
-              <md-button class="md-raised md-primary" type="submit">Submit</md-button>
-            </md-input-container>
+          <md-input-container>
+            <label>Search</label>
+            <input class="md-primary" type="text" ng-model="preference.term" name="term">
+          </md-input-container>
+          <md-input-container>
+            <md-button class="md-raised md-primary" type="submit">Submit</md-button>
+          </md-input-container>
         </form>
       </div>
       <div class="searchresults" layout="row" layout-wrap>
+        <!-- Generate search result cards based on Yelp API response data -->
         <md-card ng-hide='result.hide' ng-repeat="result in searchresults" class="searchcard fx-zoom-normal fx-speed-750">
           <img ng-src={{result.image_url}} alt="image caption">
           <md-card-title>
@@ -38,6 +39,7 @@
               <a ng-href={{result.url}}><img ng-src={{result.rating_img_url}} /></a>
               <span class="md-body-1">&nbsp{{result.review_count}} Reviews</span>
             </div>
+            <!-- Yelp logo included per Yelp display requirements https://www.yelp.com/developers/display_requirements -->
             <a ng-href={{result.url}}><img src="assets/yelp-logo-xsmall.png" /></a>
           </md-card-content>
           <md-card-actions layout-fill>
@@ -54,42 +56,42 @@
       </div>
     </div>
     <div id="choices">
-    <h2 class="md-headline">Saved Choices</h2>
-    <div class="saveddisplay" layout="row" layout-wrap>
-      <!-- Display saved cards, sorting by descending votes -->
-      <md-card ng-repeat="choice in choices | orderBy:'votes':true" class="savedcard fx-zoom-normal fx-speed-750">
-        <img ng-src={{choice.image_url}} class="md-card-image" alt="image caption">
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-title">{{choice.name}}</span>
-          </md-card-title-text>
-        </md-card-title>
-        <md-card-content layout-padding layout="column">
-          <div layout="row" layout-align="start center">
-            <a ng-href={{choice.url}}><img ng-src={{choice.rating_img_url}} /></a>
-            <span class="md-body-1">&nbsp{{choice.review_count}} Reviews</span>
-          </div>
-          <span class="md-caption">{{choice.snippet_text}}</span>
-          <a ng-href={{choice.url}}><img src="assets/yelp_review_btn_red.png" /></a>
-        </md-card-content>
-        <md-card-actions layout-fill>
-          <md-card-icon-actions layout="row" layout-align="end end">
-            <span class="md-subhead md-padding" layout-align="end">{{choice.votes}} Votes</span>
-            <span flex></span>
-            <md-button class="md-icon-button" aria-label="Upvote" ng-disabled='choice.voted' ng-click="updateVotes(choice)" >
-              <md-icon class="material-icons thumb-up">thumb_up</md-icon>
-            </md-button>
-            <md-button class="md-icon-button" aria-label="Dismiss" ng-click="removeChoice(choice)">
-              <md-icon md-font-icon="material-icons">clear</md-icon>
-            </md-button>
-          </md-card-icon-actions>
-        </md-card-actions>
-      </md-card>
+      <h2 class="md-headline">Saved Choices</h2>
+      <div class="saveddisplay" layout="row" layout-wrap>
+        <!-- Display saved cards, sorting by descending votes -->
+        <md-card ng-repeat="choice in choices | orderBy:'votes':true" class="savedcard fx-zoom-normal fx-speed-750">
+          <img ng-src={{choice.image_url}} class="md-card-image" alt="image caption">
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-title">{{choice.name}}</span>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-content layout-padding layout="column">
+            <div layout="row" layout-align="start center">
+              <a ng-href={{choice.url}}><img ng-src={{choice.rating_img_url}} /></a>
+              <span class="md-body-1">&nbsp{{choice.review_count}} Reviews</span>
+            </div>
+            <span class="md-caption">{{choice.snippet_text}}</span>
+            <a ng-href={{choice.url}}><img src="assets/yelp_review_btn_red.png" /></a>
+          </md-card-content>
+          <md-card-actions layout-fill>
+            <md-card-icon-actions layout="row" layout-align="end end">
+              <span class="md-subhead md-padding" layout-align="end">{{choice.votes}} Votes</span>
+              <span flex></span>
+              <md-button class="md-icon-button" aria-label="Upvote" ng-disabled='choice.voted' ng-click="updateVotes(choice)">
+                <md-icon class="material-icons thumb-up">thumb_up</md-icon>
+              </md-button>
+              <md-button class="md-icon-button" aria-label="Dismiss" ng-click="removeChoice(choice)">
+                <md-icon md-font-icon="material-icons">clear</md-icon>
+              </md-button>
+            </md-card-icon-actions>
+          </md-card-actions>
+        </md-card>
       </div>
     </div>
   </div>
   <div flex='20' layout-padding class='chat'>
-    <!-- Chat directive -->
+    <!-- Chat Directive -->
     <chat></chat>
   </div>
 </div>
