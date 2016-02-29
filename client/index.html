@@ -1,39 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title></title>
-    <!-- <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-    <link rel="stylesheet" href="lib/angular-material/angular-material.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="styles/styles.css">
-    
-    <base href="/">
-  </head>
-  <body ng-app="clever" ng-cloak>
-    <main>
-      <div ng-view></div>
-    </main>
-    <footer></footer>
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-    <script src="lib/angular/angular.js"></script>
-    <script src="lib/angular-route/angular-route.js"></script>
-    <script src="lib/angular-aria/angular-aria.js"></script>
-    <script src="lib/angular-animate/angular-animate.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
-    <script src="lib/ngFx/dist/ngFx.js"></script>
-    <script src="lib/angular-material/angular-material.js"></script>
-    <script src="app/app.js"></script>
-    <script src="app/event/event.js"></script>
-    <script src="app/choices/choices.js"></script>
-    <script src="app/chat/chat.js"></script>
-    <script src="app/utilities/services.js"></script>
-    
 
-    <script src="/socket.io/socket.io.js"></script>
+<head>
+  <title>NyteByte</title>
+  <link rel="stylesheet" href="lib/angular-material/angular-material.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="styles/styles.css">
+  <base href="/">
+</head>
 
-    <script>
-      var socket = io();
-    </script> 
-  </body>
+<body ng-app="nytebyte" ng-cloak>
+  <main>
+    <div ng-view></div>
+  </main>
+  <footer></footer>
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular-route/angular-route.js"></script>
+  <script src="lib/angular-aria/angular-aria.js"></script>
+  <script src="lib/angular-animate/angular-animate.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
+  <script src="lib/ngFx/dist/ngFx.js"></script>
+  <script src="lib/angular-material/angular-material.js"></script>
+  <script src="app/app.js"></script>
+  <script src="app/event/event.js"></script>
+  <script src="app/choices/choices.js"></script>
+  <script src="app/chat/chat.js"></script>
+  <script src="app/utilities/services.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    // open socket connection
+    var socket = io();
+    // Made at Hack Reactor Remote Beta
+    $('body').append(
+      '<a href="http://hackreactor.com/remote-beta"> \
+      <img class="hackreactor" style="position: fixed; top: 0; right: 0; border: 0;" \
+      src="http://i.imgur.com/x86kKmF.png" \
+      alt="Built at Hack Reactor Remote Beta"> \
+      </a>'
+    );
+  </script>
+</body>
+
 </html>

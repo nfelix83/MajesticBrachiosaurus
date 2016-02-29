@@ -1,7 +1,8 @@
-angular.module('clever.chat',[])
+angular.module('nytebyte.chat', [])
 
-.controller('ChatController', function($scope, socket) {
-  $scope.messages=[];
+.controller('ChatController', function ($scope, socket) {
+  // binding for displayed chat messages
+  $scope.messages = [];
 
   // initialize the chat with existing messages
   socket.on('init', function (data) {
@@ -10,8 +11,8 @@ angular.module('clever.chat',[])
 
   // add messages locally when received from server
   socket.on('send:message', function (message) {
-    // don't display broadcasts for other events
-    if(message.eventId === $scope.eventId){
+    // don't display broadcasts for events other than this one
+    if (message.eventId === $scope.eventId) {
       $scope.messages.push(message);
     }
   });
@@ -32,4 +33,3 @@ angular.module('clever.chat',[])
     $scope.messageText = '';
   };
 });
-

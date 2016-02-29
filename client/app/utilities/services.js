@@ -1,8 +1,10 @@
-angular.module('clever.services', [])
+angular.module('nytebyte.services', [])
 
+// create sockets
 .factory('socket', function($rootScope) {
   var socket = io.connect();
   return {
+    // socket 'on' event
     on: function(eventName, callback) {
       socket.on(eventName, function() {
         var args = arguments;
@@ -11,6 +13,7 @@ angular.module('clever.services', [])
         });
       });
     },
+    // socket 'emit' event
     emit: function(eventName, data, callback) {
       socket.emit(eventName, data, function() {
         var args = arguments;
