@@ -36,9 +36,9 @@
     "grunt-nodemon": "^0.4.1",
     "grunt-shell": "^1.1.2",
     "mongoose": "^4.4.4",
+    "ng-fx": "^2.0.4",
     "random-words": "0.0.1",
     "socket.io": "^1.4.5",
-    "yelp": "^1.0.1",
-    "ng-fx": "~2.0.4"
+    "yelp": "^1.0.1"
   }
 }
