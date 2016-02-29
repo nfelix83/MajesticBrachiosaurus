@@ -36,14 +36,9 @@ md-input-container {
 }
 
 md-input-container:not(.md-input-invalid) {
-  color: green;
-}
-
-md-input-container:not(.md-input-invalid) {
   color: dodgerblue;
 }
 
-md-input-container.md-input-invalid,
 md-input-container.md-input-invalid {
   color: red;
 }

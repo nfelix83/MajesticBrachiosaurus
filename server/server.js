@@ -20,7 +20,6 @@ app.use(express.static(__dirname + '../../client'));
 app.enable('trust proxy');
 
 io.on('connection', function (socket) {
-  console.log('a user connected');
   // parse the event id from the socket headers
   var eventId = url.parse(socket.handshake.headers.referer).path.substr(1);
 
