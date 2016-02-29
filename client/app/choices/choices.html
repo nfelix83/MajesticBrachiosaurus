@@ -1,30 +1,28 @@
 <md-toolbar>
   <div id="eventdetails" class="md-padding" layout="column">
-    <div layout="row">
-      <span class="md-display-1">{{eventName}} | {{location}} </span>
-      <span flex></span>
-      <md-button class="md-icon-button" aria-labe="Email Link" ng-href="mailto:?subject=Help plan {{eventName}}!&body=Someone has asked you to help plan {{eventName}}. Visit HEROKU_BASE_URL/{{eventId}} to get started!">
-        <md-icon md-font-icon="material-icons">email</md-icon>
-      </md-button>
-    </div>
-    <div>
-      <span class="md-subhead">{{date}} | {{time}}</span>
-    </div>
+    <span class="md-display-1">{{eventName}} | {{location}} </span>
+    <span class="md-subhead">{{date}} | {{time}}</span>
   </div>
 </md-toolbar>
 <div layout="row" layout-margin class="main">
   <div flex="80">
+  <div layout="row" layout-align="start center">
+    <md-button class="md-icon-button" aria-labe="Email Link" ng-href="mailto:?subject=Help plan {{eventName}}!&body=Someone has asked you to help plan {{eventName}}. Visit HEROKU_BASE_URL/{{eventId}} to get started!">
+      <md-icon md-font-icon="material-icons">email</md-icon>
+    </md-button>
+    <span class="md-body-1">Email a link to this page or share <a ng-href="http://nytebyte.herokuapp.com/{{eventId}}">http://nytebyte.herokuapp.com/{{eventId}}</a> with friends!</span>
+  </div>
     <div id="search">
       <div class="searchcontrols">
         <h2 class="md-headline">Search</h2>
-        <form layout="row" ng-submit="sendPreference()">
-          <md-input-container>
-            <label>Search</label>
-            <input class="md-primary" type="text" ng-model="preference.term" name="term">
-          </md-input-container>
-          <md-input-container>
-            <md-button class="md-raised md-primary" type="submit">Submit</md-button>
-          </md-input-container>
+        <form layout="row" submit="sendPreference()">
+            <md-input-container>
+              <label>Search</label>
+              <input class="md-primary" type="text" ng-model="preference.term" name="term">
+            </md-input-container>
+            <md-input-container>
+              <md-button class="md-raised md-primary" type="submit">Submit</md-button>
+            </md-input-container>
         </form>
       </div>
       <div class="searchresults" layout="row" layout-wrap>
@@ -90,10 +88,8 @@
       </div>
     </div>
   </div>
-  <div flex='20' class='chat'>
+  <div flex='20' layout-padding class='chat'>
+    <!-- Chat directive -->
     <chat></chat>
-    
-    
-
   </div>
 </div>
