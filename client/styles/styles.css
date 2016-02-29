@@ -1,70 +1,69 @@
-
 .main {}
 
 #vert-container {
-  height:600px;
-  width:100%;
-  position:relative;
-
+  height: 600px;
+  width: 100%;
+  position: relative;
 }
 
 .chatcontrols {
-  position:absolute;
+  position: absolute;
 }
+
 .bubble {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    padding: 0px;
-    background-color: #F2F2F2;
-    display:block;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    border-color: black
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  background-color: #F2F2F2;
+  display: block;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border-color: black
 }
 
 .chat {
-    border: 5px solid black;
+  border: 2px solid black;
 }
 
 md-input-container {
-    width: 100%;
+  width: 100%;
 }
 
 .event-radius {
-    width: 100px;
+  width: 100px;
 }
 
 md-input-container:not(.md-input-invalid) {
-    color: green;
+  color: green;
 }
 
 md-input-container:not(.md-input-invalid) {
-    color: dodgerblue;
+  color: dodgerblue;
 }
 
 md-input-container.md-input-invalid,
 md-input-container.md-input-invalid {
-    color: red;
+  color: red;
 }
 
 .resultname {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .thumb-up:hover {
-    color: dodgerblue;
+  color: dodgerblue;
 }
 
 .md-icon-button[disabled] .thumb-up {
-    color: dodgerblue;
+  color: dodgerblue;
 }
 
 .searchcard {
-    width: 300px;
+  width: 300px;
 }
 
 .savedcard {
-    width: 300px;
+  width: 300px;
 }
