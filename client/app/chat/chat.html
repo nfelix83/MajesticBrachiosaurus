@@ -1,9 +1,15 @@
 <h3 class="md-title" align="center">Comments</h3>
+<md-virtual-repeat-container id='vert-container'>
 <div class='messages'>
-  <ul>
-    <li ng-repeat="message in messages" class='bubble'>'{{message.text}}' says {{message.name}}</li>
-  </ul>
+  
+    <div ng-repeat="message in messages">
+    <div class='bubble'>{{message.name}} : '{{message.text}}'</div>
+    
+
+  
 </div>
+</md-virtual-repeat-container>
+
 <div class='chatcontrols'>
   <form name="chat" class="chatinput" ng-submit="sendMessage()">
     <md-input-container>
