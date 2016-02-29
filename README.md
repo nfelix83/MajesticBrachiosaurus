@@ -1,6 +1,6 @@
 # NyteByte
 
-> Use our app to collaborate with your friends to help you and your friends choose a place to eat by voting choices you and your friends picked!
+> Use our app to collaborate with your friends to help choose a place to eat by voting choices you and your friends picked!
 
 ## Team
 
