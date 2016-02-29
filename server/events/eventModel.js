@@ -30,5 +30,5 @@ var EventSchema = new Schema({
   }],
   messages: Array
 });
-
+//export the event schema so it can be accessed out of this template by requiring
 module.exports = mongoose.model('Event', EventSchema);
