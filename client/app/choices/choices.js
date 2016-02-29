@@ -82,12 +82,12 @@ angular.module('nytebyte.choices', [])
       Preference.removeChoice(choice.id)
       .success(function success (response) {
         $scope.choices.splice(removeIndex, 1);
-        $mdToast.showSimple('Removed');
+        $mdToast.show({position: 'top right', template: '<md-toast>Removed</md-toast>'});
       }).error(function error (error, status) {
         if (status === 418) {
-          $mdToast.showSimple('User\'s votes exist');
+          $mdToast.show({position: 'top right', template: '<md-toast>User\'s votes exist</md-toast>'});
         } else if (status === 403) {
-          $mdToast.showSimple('Must be user that submitted');
+          $mdToast.show({position: 'top right', template: '<md-toast>Must be user that submitted</md-toast>'});
         }
       });
     }
@@ -110,11 +110,11 @@ angular.module('nytebyte.choices', [])
     Preference.storeChoice(choice.id)
     .success(function success (response) {
       $scope.choices.push(choice);
-      $mdToast.showSimple('Saved');
+      $mdToast.show({position: 'top right', template: '<md-toast>Saved</md-toast>'});
       $scope.searchresults.splice(index, 1);
     }).error(function error (error, status) {
       if (status === 418) {
-        $mdToast.showSimple('Limit reached');
+        $mdToast.show({position: 'top right', template: '<md-toast>Limit reached</md-toast>'});
       }
     });
   };
